@@ -8,12 +8,12 @@ interface WrappedProps {
 
 function Wrapped({ albums, title }: WrappedProps) {
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center gap-4">
       <Title>{title}</Title>
 
-      <ul className="flex gap-2">
+      <ul className="flex flex-wrap gap-4">
         {albums.map((album, index) => (
-          <li key={`${album}__${index}`}>
+          <li key={index}>
             <AlbumCard {...album} />
           </li>
         ))}

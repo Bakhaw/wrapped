@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/utils";
+import { cn } from "@/lib/utils";
 
 interface TitleProps {
   children: React.ReactNode;
@@ -11,9 +11,8 @@ const Title: React.FC<TitleProps> = ({ children, className }) => (
       background: "linear-gradient(180deg, #fff, #adadad)",
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
-      fontSize: "max(48px,min(5vw,76px))",
     }}
-    className={cn("relative font-black", className)}
+    className={cn("relative font-black text-4xl lg:text-6xl", className)}
   >
     {children}
   </h1>
