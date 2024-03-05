@@ -12,14 +12,8 @@ const mockedAlbumCard: AlbumCardProps = {
 const mockedAlbums = {
   ["2024" as string]: [mockedAlbumCard, mockedAlbumCard],
   "2023": [],
-  "2022": [mockedAlbumCard],
-  "2021": [
-    mockedAlbumCard,
-    mockedAlbumCard,
-    mockedAlbumCard,
-    mockedAlbumCard,
-    mockedAlbumCard,
-  ],
+  "2022": [],
+  "2021": [],
 };
 
 // TODO link this function with back-end service (strapi)

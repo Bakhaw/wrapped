@@ -9,14 +9,10 @@ function Home() {
   const { albums } = use(getAlbums());
 
   return (
-    <main className="flex flex-col gap-8 min-h-screen p-8 lg:p-24">
-      <Title>WRAPPED</Title>
+    <main className="flex flex-col min-h-screen lg:p-24">
+      <Title className="p-4 py-8">WRAPPED</Title>
 
-      <ul className="flex flex-col-reverse gap-20">
-        {Object.keys(albums).map((year) => (
-          <Wrapped key={year} albums={albums[year]} title={year} />
-        ))}
-      </ul>
+      <Wrapped albums={albums} />
     </main>
   );
 }
