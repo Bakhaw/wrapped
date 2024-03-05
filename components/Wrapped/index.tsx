@@ -6,16 +6,15 @@ import AlbumCard, { AlbumCardProps } from "@/components/AlbumCard";
 import Title from "@/components/Title";
 
 interface WrappedProps {
-  albums: { [key: string]: AlbumCardProps[] };
-  title?: string;
+  albums: {
+    [key: string]: {
+      bgColor: string;
+      data: AlbumCardProps[];
+    };
+  };
 }
 
-function Wrapped({ albums, title }: WrappedProps) {
-  const defaultContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
-  console.log("albums", albums);
-
+function Wrapped({ albums }: WrappedProps) {
   return (
     <div className="flex flex-col justify-center gap-4">
       <Accordion selectionMode="multiple" className="p-0">
@@ -24,12 +23,15 @@ function Wrapped({ albums, title }: WrappedProps) {
             key={year}
             title={<Title>{year}</Title>}
             aria-label={`Accordion ${year}`}
-            className="bg-red-900 px-4"
+            className="px-4"
+            style={{
+              backgroundColor: albums[year].bgColor,
+            }}
           >
-            {albums[year].length > 0 ? (
-              <ul className="grid grid-cols-2 gap-4 p-1">
-                {albums[year].map((album, index) => (
-                  <li key={index} className="w-32">
+            {albums[year].data?.length > 0 ? (
+              <ul className="flex flex-wrap gap-4">
+                {albums[year].data.map((album, index) => (
+                  <li key={index} className="w-28">
                     <AlbumCard {...album} />
                   </li>
                 ))}
