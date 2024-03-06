@@ -2,35 +2,41 @@
 
 import { Accordion, AccordionItem } from "@nextui-org/react";
 
-import AlbumCard, { AlbumCardProps } from "@/components/AlbumCard";
+import { WrappedResponse } from "@/app/api/wrapped/methods";
+
+import AlbumCard from "@/components/AlbumCard";
 import Title from "@/components/Title";
 
 interface WrappedProps {
-  albums: {
-    [key: string]: {
-      bgColor: string;
-      data: AlbumCardProps[];
-    };
-  };
+  wrapped: WrappedResponse;
 }
 
-function Wrapped({ albums }: WrappedProps) {
+function Wrapped({ wrapped }: WrappedProps) {
+  const accordionColors = [
+    "#E896FA",
+    "#FFFF55",
+    "#83EE92",
+    "#E896FA",
+    "#FFFF55",
+    "#83EE92",
+  ];
+
   return (
     <div className="flex flex-col justify-center gap-4">
       <Accordion selectionMode="multiple" className="p-0">
-        {Object.keys(albums).map((year: string) => (
+        {wrapped.map((item, index) => (
           <AccordionItem
-            key={year}
-            title={<Title>{year}</Title>}
-            aria-label={`Accordion ${year}`}
+            key={item.year}
+            title={<Title>{item.year}</Title>}
+            aria-label={`Accordion ${item.year}`}
             className="px-4"
             style={{
-              backgroundColor: albums[year].bgColor,
+              backgroundColor: accordionColors[index],
             }}
           >
-            {albums[year].data?.length > 0 ? (
+            {item.albums.length > 0 ? (
               <ul className="flex flex-wrap gap-4">
-                {albums[year].data.map((album, index) => (
+                {item.albums.map((album, index) => (
                   <li key={index} className="w-28">
                     <AlbumCard {...album} />
                   </li>
