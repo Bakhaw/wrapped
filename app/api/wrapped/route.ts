@@ -16,12 +16,20 @@ const mockedWrapped: WrappedResponse = [
     year: 2024,
   },
   {
-    albums: [mockedAlbumCard, mockedAlbumCard, mockedAlbumCard],
+    albums: [mockedAlbumCard],
     year: 2023,
   },
   {
-    albums: [mockedAlbumCard, mockedAlbumCard, mockedAlbumCard],
+    albums: [mockedAlbumCard, mockedAlbumCard],
     year: 2022,
+  },
+  {
+    albums: [],
+    year: 2021,
+  },
+  {
+    albums: [],
+    year: 2020,
   },
 ];
 

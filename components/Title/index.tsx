@@ -8,7 +8,7 @@ interface TitleProps {
 const Title: React.FC<TitleProps> = ({ children, className }) => (
   <h1
     style={{
-      background: "linear-gradient(180deg, #575757, #000)",
+      background: "linear-gradient(180deg, #080300, #000)",
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
     }}
