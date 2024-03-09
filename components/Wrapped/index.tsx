@@ -36,15 +36,14 @@ function Wrapped({ wrapped }: WrappedProps) {
           <AccordionItem
             key={item.year}
             value={item.year.toString()}
-            className="px-4"
             style={{
               backgroundColor: accordionColors[index],
             }}
           >
-            <AccordionTrigger>
+            <AccordionTrigger className="px-4">
               <Title>{item.year}</Title>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="p-4">
               {item.albums.length > 0 ? (
                 <ul className="flex flex-wrap gap-4">
                   {item.albums.map((album, index) => (
@@ -54,12 +53,10 @@ function Wrapped({ wrapped }: WrappedProps) {
                   ))}
                 </ul>
               ) : (
-                <div className="p-2">
-                  <Button className="uppercase font-bold rounded-lg text-foreground text-xs px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:bg-gradient-to-br hover:ring-4 hover:ring-amber-300 focus:ring-4 focus:ring-amber-300 focus:scale-95 transition-all duration-150">
-                    <CardStackPlusIcon className="mr-2 h-5 w-5" />
-                    Add a new wrap
-                  </Button>
-                </div>
+                <Button className="uppercase font-bold rounded-lg text-foreground text-xs px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:bg-gradient-to-br hover:ring-4 hover:ring-amber-300 focus:ring-4 focus:ring-amber-300 focus:scale-95 transition-all duration-150">
+                  <CardStackPlusIcon className="mr-2 h-5 w-5" />
+                  Add a new wrap
+                </Button>
               )}
             </AccordionContent>
           </AccordionItem>
