@@ -4,10 +4,11 @@ import { AlbumCardProps } from "@/components/AlbumCard";
 import { WrappedResponse } from "./methods";
 
 const mockedAlbumCard: AlbumCardProps = {
+  artist: "Josman",
+  album: "J.000.$",
   image:
     "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2735a7c027718559ea175420718&w=1920&q=75",
-  subtitle: "Josman",
-  title: "J.000.$",
+  release_date: 2023,
 };
 
 const mockedWrapped: WrappedResponse = [
