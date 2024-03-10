@@ -21,7 +21,7 @@ function Home() {
   return (
     <section>
       <div className="flex justify-start items-center gap-4 p-4 lg:px-0">
-        <Title>WRAPPED</Title>
+        <Title>WRAPPPED</Title>
         <GrLineChart className="h-8 w-8 lg:h-12 lg:w-12 text-foreground" />
       </div>
 
