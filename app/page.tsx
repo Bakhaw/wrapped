@@ -22,7 +22,7 @@ function Home() {
     <section>
       <div className="flex justify-start items-center gap-4 p-4 lg:px-0">
         <Title>WRAPPPED</Title>
-        <GrLineChart className="h-8 w-8 lg:h-12 lg:w-12 text-foreground" />
+        <GrLineChart className="h-8 w-8 lg:h-12 lg:w-12 text-amber-950" />
       </div>
 
       {wrapped && <Wrapped wrapped={wrapped} />}
