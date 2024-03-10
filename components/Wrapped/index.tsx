@@ -30,6 +30,8 @@ function Wrapped({ wrapped }: WrappedProps) {
     "#E19A5A",
   ];
 
+  console.log("wrapped", wrapped);
+
   return (
     <ul className="flex flex-col justify-center gap-4">
       <Accordion type="multiple">
@@ -49,7 +51,12 @@ function Wrapped({ wrapped }: WrappedProps) {
                 <ul className="flex flex-wrap gap-4">
                   {item.albums.map((album, index) => (
                     <li key={index}>
-                      <AlbumCard {...album} />
+                      <AlbumCard
+                        album={album.album}
+                        artist={album.artist}
+                        image={album.image}
+                        release_date={album.release_date}
+                      />
                     </li>
                   ))}
                 </ul>

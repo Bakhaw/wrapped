@@ -8,8 +8,7 @@ interface WrappedItem {
 export type WrappedResponse = WrappedItem[];
 
 export async function getWrapped(): Promise<WrappedResponse> {
-  const url = `${process.env.APP_BASE_URL}/api/wrapped`;
-  const res = await fetch(url);
+  const res = await fetch("/api/wrapped");
   const { albums } = await res.json();
 
   return albums;
