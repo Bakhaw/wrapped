@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import YTMusic from "ytmusic-api";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -6,17 +7,10 @@ export async function GET(req: Request) {
 
   if (!query) throw new Error("search: query param not provided");
 
-  const url = `${process.env.GENIUS_API_BASE_URL}/?search=${query}`;
+  const ytmusic = new YTMusic();
+  await ytmusic.initialize();
 
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + process.env.GENIUS_API_ACCESS_TOKEN,
-      "Content-Type": "application/json",
-    },
-  });
+  const searchResponse = await ytmusic.searchAlbums(query);
 
-  const json = await res.json();
-
-  return NextResponse.json({ json });
+  return NextResponse.json(searchResponse);
 }

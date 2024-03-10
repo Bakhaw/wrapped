@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "music.bakhaw.dev",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 };

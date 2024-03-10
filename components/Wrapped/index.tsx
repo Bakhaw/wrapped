@@ -1,6 +1,6 @@
 "use client";
 
-import { CardStackPlusIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 import { WrappedResponse } from "@/app/api/wrapped/methods";
 
@@ -10,10 +10,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 
 import AlbumCard from "@/components/AlbumCard";
 import Title from "@/components/Title";
+
+import AddNewWrapButton from "./AddNewWrapButton";
 
 interface WrappedProps {
   wrapped: WrappedResponse;
@@ -47,16 +48,15 @@ function Wrapped({ wrapped }: WrappedProps) {
               {item.albums.length > 0 ? (
                 <ul className="flex flex-wrap gap-4">
                   {item.albums.map((album, index) => (
-                    <li key={index} className="w-28">
+                    <li key={index}>
                       <AlbumCard {...album} />
                     </li>
                   ))}
                 </ul>
               ) : (
-                <Button className="uppercase font-bold rounded-lg text-foreground text-xs px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:bg-gradient-to-br hover:ring-4 hover:ring-amber-300 focus:ring-4 focus:ring-amber-300 focus:scale-95 transition-all duration-150">
-                  <CardStackPlusIcon className="mr-2 h-5 w-5" />
-                  Add a new wrap
-                </Button>
+                <Link href={`/new-wrap/${item.year}`}>
+                  <AddNewWrapButton />
+                </Link>
               )}
             </AccordionContent>
           </AccordionItem>
