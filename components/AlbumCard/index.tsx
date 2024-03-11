@@ -1,4 +1,20 @@
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export interface AlbumCardProps {
   artist: string;
@@ -13,24 +29,26 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   album,
   release_date,
 }) => (
-  <div className="flex flex-col h-64 w-full rounded-b-sm text-amber-950 bg-amber-100 hover:ring-4 hover:ring-amber-950/60 transition-all duration-150">
-    <Image
-      alt={album}
-      src={image}
-      height={136}
-      width={136}
-      className="object-cover"
-    />
-
-    <div className="flex flex-col justify-between p-2 h-32 max-w-[136px] rounded-b-sm">
+  <Card className="w-[350px]">
+    <CardHeader>
+      <Image
+        alt={album}
+        src={image}
+        height={136}
+        width={136}
+        className="object-cover"
+      />
+    </CardHeader>
+    <CardContent></CardContent>
+    <CardFooter className="flex justify-between">
       <div>
         <h1 className="font-black line-clamp-2">{album}</h1>
         <h2 className="text-sm font-bold line-clamp-2">{artist}</h2>
       </div>
 
       <p className="text-sm font-bold">{release_date}</p>
-    </div>
-  </div>
+    </CardFooter>
+  </Card>
 );
 
 export default AlbumCard;
