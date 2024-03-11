@@ -25,9 +25,9 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
       <Image
         alt={album}
         src={image}
-        height={180}
+        height={16}
         width={136}
-        className="w-full h-full object-cover aspect-square"
+        className="w-full h-full object-cover"
       />
     </CardHeader>
     <CardContent>
