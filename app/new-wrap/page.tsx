@@ -108,7 +108,7 @@ function Home({
             </div>
           )}
 
-          <ul className="flex justify-between flex-wrap gap-8">
+          <ul className="flex flex-wrap gap-8">
             {filterSearchResponseByYear?.map((album) => (
               <li key={album.albumId}>
                 <AlbumCard
@@ -129,7 +129,7 @@ function Home({
 
           <ul className="flex flex-wrap gap-4">
             {searchResponse.map((album) => (
-              <li key={album.albumId}>
+              <li className="mb-10" key={album.albumId}>
                 <AlbumCard
                   album={album.name}
                   artist={album.artist.name}

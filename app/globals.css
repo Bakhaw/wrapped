@@ -4,29 +4,28 @@
 
 @layer base {
   :root {
-    /* yellow theme styles go here */
-    --background: 36 29% 7%; /* #1 AMBER */
-    --foreground: 41 100% 85%; /* #12 AMBER */
-    --card: 36 71% 11%; /* #3 AMBER */
-    --card-foreground: 111 13% 97%;
-    --popover: 111 42% 4%;
-    --popover-foreground: 111 13% 97%;
-    --primary: 53 90% 62%; /* #11 LIME */
-    --primary-foreground: 0 0% 100%; /* WHITE */
-    --secondary: 46 100% 54%; /* #11 AMBER */
-    --secondary-foreground: 0 0% 9%; /* BLACK */
-    --accent: 41 100% 97%; /* #13 AMBER */
-    --accent-foreground: 0 0% 9%; /* BLACK */
-    --destructive: 50 100% 52%; /* #10 AMBER */
-    --destructive-foreground: 0 0% 9%; /* BLACK */
-    --muted: 111 25% 10%;
-    --muted-foreground: 111 14% 69%;
-    --border: 39 90% 19%; /* #6 AMBER */
-    --input: 37 64% 27%; /* #7 AMBER */
-    --ring: 36 60% 35%; /* #8 AMBER */
+    --background: 0 17% 8%; /* #1 Tomato */
+    --foreground: 10 86% 89%; /* #12 Tomato */
+    --card: 5 48% 15%; /* #3 Tomato */
+    --card-foreground: 0 0% 3.9%; /* BLACK */
+    --popover: 0 0% 100%; /* WHITE */
+    --popover-foreground: 0 0% 3.9%; /* BLACK */
+    --primary: 350 100% 91%; /* CRIMSON 11.5 */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 348 75% 59%; /* CRIMSON 10 */
+    --secondary-foreground: 0 0% 100%; /* WHITE */
+    --muted: 0 0% 96.1%; /* WHITE */
+    --muted-foreground: 0 0% 63.9%; /* GRAY */
+    --accent: 9 100% 97%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 9 49% 35%;
+    --input: 9 49% 35%;
+    --ring: 9 49% 35%;
     --radius: 0.5rem;
-    --first-gradient: 46 100% 54%; /* #11 AMBER */
-    --second-gradient: 80 70% 66%; /* #11 LIME */
+    --first-gradient: 10 78% 54%; /* #9 Tomato */
+    --second-gradient: 322 65% 55%;
   }
 }
 

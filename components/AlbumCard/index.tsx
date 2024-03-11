@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 export interface AlbumCardProps {
   artist: string;
@@ -14,13 +15,13 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   album,
   release_date,
 }) => (
-  <CardContainer className="rounded-xl inter-var">
-    <CardBody className="border bg-transparent border-white/[0.2] relative group/card hover:shadow-2xl hover:shadow-yellow-500/[0.1] w-auto sm:w-[25rem] rounded-xl p-6">
+  <CardContainer className="group rounded-xl inter-var">
+    <CardBody className="bg-transparent h-auto border border-white/[0.1] relative group/card hover:shadow-2xl hover:shadow-yellow-500/[0.1] w-auto sm:w-[25rem] rounded-xl p-6">
       <Image
         src={image}
         height="1000"
         width="1000"
-        className="absolute blur-2xl top-0 left-0 w-full object-cover rounded-xl shadow-xl"
+        className="absolute blur-sm top-0 left-0 h-[100%] w-full object-cover rounded-xl shadow-xl"
         alt="thumbnail"
       />
       <CardItem translateZ="100" className="w-full mt-2">
@@ -32,16 +33,29 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           alt="thumbnail"
         />
       </CardItem>
-      <CardItem translateZ="50" className="text-xl font-bold text-white mt-2">
+      <CardItem
+        translateZ="50"
+        className="text-xl font-bold text-white mt-2 bg-black p-2 rounded-sm bg-opacity-30"
+      >
         {album} • {release_date}
       </CardItem>
-      <CardItem
-        as="p"
-        translateZ="60"
-        className="text-white text-sm max-w-sm mt-2 mb-4"
-      >
-        {artist}
-      </CardItem>
+      <div className="w-full flex justify-between">
+        <CardItem
+          as="p"
+          translateZ="60"
+          className="text-white h-fit text-sm mt-2 bg-black p-2 rounded-sm bg-opacity-30"
+        >
+          {artist}
+        </CardItem>
+
+        <CardItem
+          as="p"
+          translateZ="60"
+          className="text-white text-sm max-w-sm mt-2 mb-4 bg-black p-2 rounded-sm bg-opacity-30 transition-all opacity-0 group-hover:opacity-100"
+        >
+          <PlusCircledIcon className="h-8 w-8 cursor-pointer transition-all hover:scale-125" />
+        </CardItem>
+      </div>
     </CardBody>
   </CardContainer>
 );
