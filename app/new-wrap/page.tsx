@@ -65,7 +65,7 @@ function Home({
       <Title>Add a new wrap</Title>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="">Select a year</label>
+        <label>Select a year</label>
         <Select onValueChange={onSelectYearChange} defaultValue={year}>
           <SelectTrigger>
             <SelectValue />
@@ -81,7 +81,7 @@ function Home({
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="">Search your favorite albums</label>
+        <label>Search your favorite albums</label>
         <SearchBar placeholder="Drake - More Life" />
       </div>
 
