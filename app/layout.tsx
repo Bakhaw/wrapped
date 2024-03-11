@@ -21,11 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-amber-700">
+      <body>
         <Providers>
           <div
             className={cn(
-              "min-h-screen max-w-screen-xl mx-auto py-8",
+              "min-h-screen border max-w-screen-xl mx-auto py-8",
               montserrat.className
             )}
           >

@@ -20,13 +20,23 @@ function Home() {
   });
 
   return (
-    <section>
-      <div className="flex justify-between items-center gap-4 p-4 lg:px-0">
+    <section className="flex flex-col h-80">
+      <div className="flex justify-between items-center gap-4 p-4">
         <Title>WRAPPPED</Title>
-        <Link href="/new-wrap">
+        <div className="md:hidden">
           <AddNewWrapButton />
-        </Link>
+        </div>
+
+        <div className="hidden md:block">
+          <AddNewWrapButton label="Add a new wrap" />
+        </div>
       </div>
+
+      {isPending && (
+        <div className="flex justify-center items-center h-full">
+          Wrappping...
+        </div>
+      )}
 
       {wrapped && <Wrapped wrapped={wrapped} />}
     </section>
