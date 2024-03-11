@@ -57,7 +57,6 @@ function Home({
 
     replace(`${pathname}?${params.toString()}`);
   }
-
   const currentYear = new Date().getFullYear();
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
@@ -67,9 +66,9 @@ function Home({
 
       <div className="flex flex-col gap-2">
         <label htmlFor="">Select a year</label>
-        <Select onValueChange={onSelectYearChange}>
+        <Select onValueChange={onSelectYearChange} defaultValue={year}>
           <SelectTrigger>
-            <SelectValue placeholder={year ?? currentYear} />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {years.map((year) => (
@@ -98,28 +97,31 @@ function Home({
         </div>
       )}
 
-      <div className="flex flex-col gap-4">
-        <Title>Released in {year}</Title>
+      {filterSearchResponseByYear && (
+        <div className="flex flex-col gap-4">
+          <Title>Released in {year}</Title>
 
-        {filterSearchResponseByYear?.length === 0 && (
-          <div>
-            No results found for <b>{search}</b>
-          </div>
-        )}
+          {filterSearchResponseByYear?.length === 0 && (
+            <div>
+              No results found for <b>{search}</b> in{" "}
+              <b>{year ?? currentYear}</b>
+            </div>
+          )}
 
-        <ul className="flex flex-wrap gap-4">
-          {filterSearchResponseByYear?.map((album) => (
-            <li key={album.albumId}>
-              <AlbumCard
-                album={album.name}
-                artist={album.artist.name}
-                image={album.thumbnails[3].url}
-                release_date={album.year ?? ""}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+          <ul className="flex flex-wrap gap-4">
+            {filterSearchResponseByYear?.map((album) => (
+              <li key={album.albumId}>
+                <AlbumCard
+                  album={album.name}
+                  artist={album.artist.name}
+                  image={album.thumbnails[3].url}
+                  release_date={album.year ?? ""}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {searchResponse && searchResponse.length > 0 && (
         <div className="flex flex-col gap-4">

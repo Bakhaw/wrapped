@@ -63,9 +63,7 @@ function Wrapped({ wrapped }: WrappedProps) {
                   ))}
                 </ul>
               ) : (
-                <Link href={`/new-wrap?year=${item.year}`}>
-                  <AddNewWrapButton />
-                </Link>
+                <AddNewWrapButton year={item.year.toString()} />
               )}
             </AccordionContent>
           </AccordionItem>

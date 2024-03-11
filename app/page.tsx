@@ -22,13 +22,7 @@ function Home() {
     <section className="flex flex-col h-80">
       <div className="flex justify-between items-center gap-4 p-4">
         <Title>WRAPPPED</Title>
-        <div className="md:hidden">
-          <AddNewWrapButton />
-        </div>
-
-        <div className="hidden md:block">
-          <AddNewWrapButton label="Add a new wrap" />
-        </div>
+        <AddNewWrapButton />
       </div>
 
       {isPending && (
