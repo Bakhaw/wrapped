@@ -21,15 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <div
-          className={cn(
-            "min-h-screen p-4 py-8 bg-background",
-            montserrat.className
-          )}
-        >
-          <Providers>{children}</Providers>
-        </div>
+      <body className="bg-amber-700">
+        <Providers>
+          <div
+            className={cn(
+              "min-h-screen max-w-screen-xl mx-auto py-8",
+              montserrat.className
+            )}
+          >
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );

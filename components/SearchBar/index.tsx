@@ -36,7 +36,7 @@ function SearchBar({ placeholder = "Search" }: SearchBarProps) {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="w-full sm:w-2/6 rounded-full flex items-center relative">
+      <div className="flex items-center w-full rounded-full relative">
         <div className="flex items-center relative">
           <IoSearchOutline className="absolute ml-4 w-5 h-5" />
         </div>
