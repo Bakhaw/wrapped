@@ -1,6 +1,7 @@
 "use client";
 
-import { ChangeEvent, useMemo } from "react";
+import { useMemo } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { searchFromApi } from "@/app/api/search/methods";
@@ -8,9 +9,7 @@ import { searchFromApi } from "@/app/api/search/methods";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -24,6 +23,8 @@ function Home({
 }: {
   searchParams: { search?: string; year?: string };
 }) {
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const { search, year } = searchParams;
 
   const {
@@ -45,40 +46,37 @@ function Home({
     [searchResponse, year]
   );
 
-  function onSelectYearChange(e: ChangeEvent<HTMLSelectElement>) {}
+  function onSelectYearChange(value: string) {
+    const params = new URLSearchParams(searchParams);
+
+    if (value) {
+      params.set("year", value);
+    } else {
+      params.delete("year");
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  }
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
   return (
-    <section className="flex flex-col gap-8 lg:px-0">
+    <section className="flex flex-col gap-8 px-4">
       <Title>Add a new wrap</Title>
 
-      <Select>
-        <SelectTrigger className="w-[280px]">
-          <SelectValue placeholder="Select a timezone" />
+      <Select onValueChange={onSelectYearChange}>
+        <SelectTrigger>
+          <SelectValue placeholder={year ?? "Select a year"} />
         </SelectTrigger>
         <SelectContent>
           {years.map((year) => (
-            // <SelectLabel>Select a year</SelectLabel>
             <SelectItem key={year} value={year.toString()}>
               {year}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-
-      {/* <div className="flex flex-col gap-1">
-        <label htmlFor="">Select a year</label>
-
-        <select onChange={onSelectYearChange}>
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div> */}
 
       <div className="flex flex-col gap-1">
         <label htmlFor="">Search your favorite albums</label>
@@ -95,7 +93,8 @@ function Home({
 
       {filterSearchResponseByYear && filterSearchResponseByYear.length > 0 && (
         <div className="flex flex-col gap-4">
-          <Title>Albums released in {year}</Title>
+          <Title>Released in {year}</Title>
+
           <ul className="flex flex-wrap gap-4">
             {filterSearchResponseByYear.map((album) => (
               <li key={album.albumId}>
@@ -114,6 +113,7 @@ function Home({
       {searchResponse && searchResponse.length > 0 && (
         <div className="flex flex-col gap-4">
           <Title>All results</Title>
+
           <ul className="flex flex-wrap gap-4">
             {searchResponse.map((album) => (
               <li key={album.albumId}>
