@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-amber-700">
+      <body className="bg-background">
         <Providers>
           <div
             className={cn(

@@ -22,11 +22,11 @@ interface WrappedProps {
 function Wrapped({ wrapped }: WrappedProps) {
   // todo add this in tailwind theme
   const accordionColors = [
-    "#E896FA",
-    "#FFFF55",
-    "#83EE92",
-    "#6793EC",
-    "#E19A5A",
+    "#141110",
+    "#1C1917",
+    "#262220",
+    "#302A27",
+    "#3B3330",
   ];
 
   return (
