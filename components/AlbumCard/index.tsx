@@ -14,13 +14,13 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   album,
   release_date,
 }) => (
-  <CardContainer className="inter-var">
-    <CardBody className="border bg-transparent border-white/[0.2] relative group/card hover:shadow-2xl hover:shadow-yellow-500/[0.1] w-auto sm:w-[25rem] h-auto rounded-xl p-6">
+  <CardContainer className="rounded-xl inter-var">
+    <CardBody className="border bg-transparent border-white/[0.2] relative group/card hover:shadow-2xl hover:shadow-yellow-500/[0.1] w-auto sm:w-[25rem] rounded-xl p-6">
       <Image
         src={image}
         height="1000"
         width="1000"
-        className="absolute blur-2xl	top-0 left-0 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+        className="absolute blur-2xl top-0 left-0 w-full object-cover rounded-xl shadow-xl"
         alt="thumbnail"
       />
       <CardItem translateZ="100" className="w-full mt-2">
@@ -28,7 +28,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           src={image}
           height="1000"
           width="1000"
-          className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+          className="h-60 w-full object-cover rounded-xl shadow-xl"
           alt="thumbnail"
         />
       </CardItem>
@@ -45,5 +45,4 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
     </CardBody>
   </CardContainer>
 );
-
 export default AlbumCard;

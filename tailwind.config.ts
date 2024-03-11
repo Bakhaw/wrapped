@@ -26,6 +26,12 @@ const config = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        backgroundImage: {
+          gradient:
+            "linear-gradient(var(--rgba-gradient) 0, var(--decay-gradient) 20%)",
+          "gradient-secondary":
+            "linear-gradient(transparent 0, rgba(0, 0, 0, 0.5) 100%)",
+        },
         backgroundtrans:
           "linear-gradient(0deg, #282c34 0%, rgba(17, 0, 32, 0.5) 100%)",
         foreground: "hsl(var(--foreground))",
