@@ -11,10 +11,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import AddNewWrapButton from "@/components/AddNewWrapButton";
 import AlbumCard from "@/components/AlbumCard";
 import Title from "@/components/Title";
-
-import AddNewWrapButton from "./AddNewWrapButton";
 
 interface WrappedProps {
   wrapped: WrappedResponse;
@@ -29,8 +28,6 @@ function Wrapped({ wrapped }: WrappedProps) {
     "#6793EC",
     "#E19A5A",
   ];
-
-  console.log("wrapped", wrapped);
 
   return (
     <ul className="flex flex-col justify-center gap-4">
@@ -61,7 +58,7 @@ function Wrapped({ wrapped }: WrappedProps) {
                   ))}
                 </ul>
               ) : (
-                <Link href={`/new-wrap/${item.year}`}>
+                <Link href={`/new-wrap?year=${item.year}`}>
                   <AddNewWrapButton />
                 </Link>
               )}

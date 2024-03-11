@@ -17,7 +17,7 @@ type SearchAlbumItem = {
 
 export type SearchResponse = SearchAlbumItem[];
 
-export async function search(query: string): Promise<SearchResponse> {
+export async function searchFromApi(query: string): Promise<SearchResponse> {
   const url = `/api/search?query=${query}`;
   const res = await fetch(url);
   const search = await res.json();

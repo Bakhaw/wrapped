@@ -10,8 +10,8 @@ import "./globals.css";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "WRAPPED",
-  description: "WRAPPED",
+  title: "WRAPPPED",
+  description: "WRAPPPED",
 };
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen lg:p-24 bg-amber-700",
+          "min-h-screen p-4 py-8 bg-amber-700",
           montserrat.className
         )}
       >

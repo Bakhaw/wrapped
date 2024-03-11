@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { GrLineChart } from "react-icons/gr";
 
 import { getWrapped } from "@/app/api/wrapped/methods";
 
-import Wrapped from "@/components/Wrapped";
+import AddNewWrapButton from "@/components/AddNewWrapButton";
 import Title from "@/components/Title";
+import Wrapped from "@/components/Wrapped";
 
 function Home() {
   const {
@@ -20,9 +21,11 @@ function Home() {
 
   return (
     <section>
-      <div className="flex justify-start items-center gap-4 p-4 lg:px-0">
+      <div className="flex justify-between items-center gap-4 p-4 lg:px-0">
         <Title>WRAPPPED</Title>
-        <GrLineChart className="h-8 w-8 lg:h-12 lg:w-12 text-amber-950" />
+        <Link href="/new-wrap">
+          <AddNewWrapButton />
+        </Link>
       </div>
 
       {wrapped && <Wrapped wrapped={wrapped} />}
