@@ -57,7 +57,6 @@ function Home({
 
     replace(`${pathname}?${params.toString()}`);
   }
-
   const currentYear = new Date().getFullYear();
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
@@ -65,25 +64,32 @@ function Home({
     <section className="flex flex-col gap-8 px-4">
       <Title>Add a new wrap</Title>
 
-      <Select onValueChange={onSelectYearChange}>
-        <SelectTrigger>
-          <SelectValue placeholder={year ?? "Select a year"} />
-        </SelectTrigger>
-        <SelectContent>
-          {years.map((year) => (
-            <SelectItem key={year} value={year.toString()}>
-              {year}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="">Select a year</label>
+        <Select onValueChange={onSelectYearChange} defaultValue={year}>
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {years.map((year) => (
+              <SelectItem key={year} value={year.toString()}>
+                {year}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <label htmlFor="">Search your favorite albums</label>
         <SearchBar placeholder="Drake - More Life" />
       </div>
 
-      {search && isPending && <div>Pending...</div>}
+      {search && isPending && (
+        <div className="flex justify-center items-center h-full">
+          Wrappping...
+        </div>
+      )}
 
       {search && searchResponse?.length === 0 && (
         <div>
@@ -91,12 +97,19 @@ function Home({
         </div>
       )}
 
-      {filterSearchResponseByYear && filterSearchResponseByYear.length > 0 && (
+      {filterSearchResponseByYear && (
         <div className="flex flex-col gap-4">
           <Title>Released in {year}</Title>
 
+          {filterSearchResponseByYear?.length === 0 && (
+            <div>
+              No results found for <b>{search}</b> in{" "}
+              <b>{year ?? currentYear}</b>
+            </div>
+          )}
+
           <ul className="flex flex-wrap gap-4">
-            {filterSearchResponseByYear.map((album) => (
+            {filterSearchResponseByYear?.map((album) => (
               <li key={album.albumId}>
                 <AlbumCard
                   album={album.name}
@@ -120,7 +133,7 @@ function Home({
                 <AlbumCard
                   album={album.name}
                   artist={album.artist.name}
-                  image={album.thumbnails[3].url}
+                  image={album.thumbnails[3]?.url}
                   release_date={album.year ?? ""}
                 />
               </li>

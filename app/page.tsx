@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 
 import { getWrapped } from "@/app/api/wrapped/methods";
@@ -20,13 +19,17 @@ function Home() {
   });
 
   return (
-    <section>
-      <div className="flex justify-between items-center gap-4 p-4 lg:px-0">
+    <section className="flex flex-col h-80">
+      <div className="flex justify-between items-center gap-4 p-4">
         <Title>WRAPPPED</Title>
-        <Link href="/new-wrap">
-          <AddNewWrapButton />
-        </Link>
+        <AddNewWrapButton />
       </div>
+
+      {isPending && (
+        <div className="flex justify-center items-center h-full">
+          Wrappping...
+        </div>
+      )}
 
       {wrapped && <Wrapped wrapped={wrapped} />}
     </section>

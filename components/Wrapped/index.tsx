@@ -22,11 +22,16 @@ interface WrappedProps {
 function Wrapped({ wrapped }: WrappedProps) {
   // todo add this in tailwind theme
   const accordionColors = [
-    "#141110",
-    "#1C1917",
-    "#262220",
-    "#302A27",
-    "#3B3330",
+    "#4D3000",
+    "#3F2700",
+    "#302008",
+    "#1D180F",
+    "#16120C",
+    // "#E896FA",
+    // "#FFFF55",
+    // "#83EE92",
+    // "#6793EC",
+    // "#E19A5A",
   ];
 
   return (
@@ -58,9 +63,7 @@ function Wrapped({ wrapped }: WrappedProps) {
                   ))}
                 </ul>
               ) : (
-                <Link href={`/new-wrap?year=${item.year}`}>
-                  <AddNewWrapButton />
-                </Link>
+                <AddNewWrapButton year={item.year.toString()} />
               )}
             </AccordionContent>
           </AccordionItem>
