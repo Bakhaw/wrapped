@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
+
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+import { CardFooter } from "../ui/card";
 
 export interface AlbumCardProps {
   artist: string;
@@ -16,7 +18,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   release_date,
 }) => (
   <CardContainer className="group rounded-xl inter-var">
-    <CardBody className="bg-transparent h-auto border border-white/[0.1] relative group/card hover:shadow-2xl hover:shadow-yellow-500/[0.1] w-auto sm:w-[25rem] rounded-xl p-6">
+    <CardBody className="relative bg-transparent h-[420px] p-6 rounded-xl border border-white/[0.2] hover:shadow-2xl hover:shadow-white/[0.1]">
       <Image
         src={image}
         height="1000"
@@ -33,11 +35,12 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           alt="thumbnail"
         />
       </CardItem>
+
       <CardItem
         translateZ="50"
-        className="text-xl font-bold text-white mt-2 bg-black p-2 rounded-sm bg-opacity-30"
+        className="text-xl font-bold text-white mt-2 bg-black p-2 rounded-sm bg-opacity-30 line-clamp-2"
       >
-        {album} • {release_date}
+        {artist} • {album}
       </CardItem>
       <div className="w-full flex justify-between">
         <CardItem
@@ -45,15 +48,15 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           translateZ="60"
           className="text-white h-fit text-sm mt-2 bg-black p-2 rounded-sm bg-opacity-30"
         >
-          {artist}
+          {release_date}
         </CardItem>
 
         <CardItem
           as="p"
           translateZ="60"
-          className="text-white text-sm max-w-sm mt-2 mb-4 bg-black p-2 rounded-sm bg-opacity-30 transition-all opacity-0 group-hover:opacity-100"
+          className="text-white text-sm bg-black mt-2 p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
         >
-          <PlusCircledIcon className="h-8 w-8 cursor-pointer transition-all hover:scale-125" />
+          <PlusCircledIcon className="cursor-pointer h-8 w-8 hover:scale-[1.15] duration-300" />
         </CardItem>
       </div>
     </CardBody>
