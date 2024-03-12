@@ -2,7 +2,6 @@ import Image from "next/image";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import { CardFooter } from "../ui/card";
 
 export interface AlbumCardProps {
   artist: string;
@@ -18,7 +17,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   release_date,
 }) => (
   <CardContainer className="group rounded-xl inter-var">
-    <CardBody className="relative bg-transparent h-[420px] p-6 rounded-xl border border-white/[0.2] hover:shadow-2xl hover:shadow-white/[0.1]">
+    <CardBody className="relative bg-transparent h-[440px] p-6 rounded-xl border border-white/[0.2] hover:shadow-2xl hover:shadow-white/[0.1]">
       <Image
         src={image}
         height="1000"
@@ -38,7 +37,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
 
       <CardItem
         translateZ="50"
-        className="text-xl font-bold text-white mt-2 bg-black p-2 rounded-sm bg-opacity-30 line-clamp-2"
+        className="text-xl font-bold text-white mt-2 bg-black p-2 rounded-sm bg-opacity-30 line-clamp-3"
       >
         {artist} • {album}
       </CardItem>
