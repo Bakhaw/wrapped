@@ -98,8 +98,8 @@ function Home({
       )}
 
       {filterSearchResponseByYear && (
-        <div className="flex flex-col items-center md:items-start gap-4">
-          <Title>Released in {year}</Title>
+        <div className="flex flex-col gap-4">
+          <Title className="text-center md:text-left">Released in {year}</Title>
 
           {filterSearchResponseByYear?.length === 0 && (
             <div>
@@ -108,16 +108,9 @@ function Home({
             </div>
           )}
 
-          <ul
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "8px",
-              width: "100%",
-            }}
-          >
+          <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
             {filterSearchResponseByYear?.map((album) => (
-              <li key={album.albumId} className="w-fit">
+              <li key={album.albumId} className="mb-2 w-fit">
                 <AlbumCard
                   album={album.name}
                   artist={album.artist.name}
@@ -131,17 +124,10 @@ function Home({
       )}
 
       {searchResponse && searchResponse.length > 0 && (
-        <div className="flex flex-col items-center md:items-start gap-4">
-          <Title>All results</Title>
+        <div className="flex flex-col gap-4">
+          <Title className="text-center md:text-left">All results</Title>
 
-          <ul
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "8px",
-              width: "100%",
-            }}
-          >
+          <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
             {searchResponse.map((album) => (
               <li key={album.albumId} className="mb-2 w-fit">
                 <AlbumCard
