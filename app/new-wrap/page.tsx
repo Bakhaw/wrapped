@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { MinusCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { SearchAlbumItem, searchFromApi } from "@/app/api/search/methods";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Select,
   SelectContent,
@@ -60,6 +71,11 @@ function Home({
     selectedAlbums.find((album) => album.albumId === selectedAlbum.albumId);
 
   function toggleAddAlbum(selectedAlbum: SearchAlbumItem) {
+    if (selectedAlbum.year?.toString() !== year?.toString()) {
+      alertDialogRef.current?.click();
+      return;
+    }
+
     if (isAlbumAddedToWrap(selectedAlbum)) {
       removeAlbumFromSelection(selectedAlbum);
     } else {
@@ -81,6 +97,8 @@ function Home({
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
+
+  const alertDialogRef = useRef<HTMLButtonElement>(null);
 
   return (
     <section className="flex flex-col gap-8 px-4">
@@ -133,7 +151,7 @@ function Home({
 
           <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
             {selectedAlbums.map((album) => (
-              <li key={album.albumId} className="mb-2 w-fit">
+              <li key={album.albumId}>
                 <AlbumCard
                   album={album.name}
                   artist={album.artist.name}
@@ -142,7 +160,7 @@ function Home({
                   actionButton={
                     <MinusCircledIcon
                       className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
-                      onClick={() => toggleAddAlbum(album)}
+                      onClick={() => removeAlbumFromSelection(album)}
                     />
                   }
                 />
@@ -158,7 +176,7 @@ function Home({
 
           <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
             {searchResponse.map((album) => (
-              <li key={album.albumId} className="mb-2 w-fit">
+              <li key={album.albumId}>
                 <AlbumCard
                   album={album.name}
                   artist={album.artist.name}
@@ -168,13 +186,33 @@ function Home({
                     isAlbumAddedToWrap(album) ? (
                       <MinusCircledIcon
                         className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
-                        onClick={() => toggleAddAlbum(album)}
+                        onClick={() => removeAlbumFromSelection(album)}
                       />
                     ) : (
-                      <PlusCircledIcon
-                        className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
-                        onClick={() => toggleAddAlbum(album)}
-                      />
+                      <AlertDialog>
+                        <AlertDialogTrigger>
+                          <PlusCircledIcon
+                            className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
+                            onClick={() => toggleAddAlbum(album)}
+                          />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This album was not relased in {year}
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => addAlbumToSelection(album)}
+                            >
+                              Add anyway
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     )
                   }
                 />
