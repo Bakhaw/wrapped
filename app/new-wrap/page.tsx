@@ -115,11 +115,11 @@ function Home({
 
       {search && searchResponse?.length === 0 && (
         <div>
-          No results found for {search} in {year}
+          No results found for <b>{search}</b> in <b>{year}</b>
         </div>
       )}
 
-      {(searchResponse || selectedAlbums.length > 0) && (
+      {searchResponse && searchResponse.length > 0 && (
         <div className="flex flex-col gap-4">
           <Title className="text-center md:text-left">
             Your wrap for {year}

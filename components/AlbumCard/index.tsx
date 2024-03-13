@@ -39,9 +39,11 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
 
       <CardItem
         translateZ="50"
-        className="font-bold text-white mt-4 bg-black p-2 rounded-sm bg-opacity-30 w-auto truncate"
+        className="font-bold text-white mt-4 w-fit max-w-60"
       >
-        {artist} • {album}
+        <h1 className="bg-black p-2 rounded-sm bg-opacity-30 truncate">
+          {artist} • {album}
+        </h1>
       </CardItem>
 
       <div className="w-full flex justify-between">
@@ -53,13 +55,15 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           {release_date}
         </CardItem>
 
-        <CardItem
-          as="p"
-          translateZ="60"
-          className="text-white text-sm bg-black mt-2 p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
-        >
-          {actionButton}
-        </CardItem>
+        {actionButton && (
+          <CardItem
+            as="p"
+            translateZ="60"
+            className="text-white text-sm bg-black mt-2 p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
+          >
+            {actionButton}
+          </CardItem>
+        )}
       </div>
     </CardBody>
   </CardContainer>
