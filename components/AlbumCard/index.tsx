@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 export interface AlbumCardProps {
+  actionButton: React.ReactNode;
   artist: string;
   album: string;
   image: string;
@@ -11,36 +11,41 @@ export interface AlbumCardProps {
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({
-  image,
+  actionButton,
   artist,
   album,
+  image,
   release_date,
 }) => (
-  <CardContainer className="group rounded-xl inter-var">
-    <CardBody className="relative bg-transparent h-[440px] p-6 rounded-xl border border-white/[0.2] hover:shadow-2xl hover:shadow-white/[0.1]">
-      <Image
-        src={image}
-        height="1000"
-        width="1000"
-        className="absolute blur-sm top-0 left-0 h-[100%] w-full object-cover rounded-xl shadow-xl"
-        alt="thumbnail"
-      />
-      <CardItem translateZ="100" className="w-full mt-2">
+  <CardContainer className="group rounded-xl">
+    <CardBody className="relative p-6 bg-transparent h-full rounded-xl border border-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
+      <CardItem translateZ="50">
         <Image
           src={image}
-          height="1000"
-          width="1000"
-          className="h-60 w-full object-cover rounded-xl shadow-xl"
-          alt="thumbnail"
+          height={200}
+          width={200}
+          className="h-full w-full object-cover rounded-xl shadow-xl border border-white/[0.4]"
+          alt={album}
         />
       </CardItem>
 
+      <Image
+        src={image}
+        height={200}
+        width={200}
+        className="absolute -z-10 inset-0 blur-sm h-full w-full object-cover rounded-xl shadow-xl"
+        alt={album}
+      />
+
       <CardItem
         translateZ="50"
-        className="text-xl font-bold text-white mt-2 bg-black p-2 rounded-sm bg-opacity-30 line-clamp-3"
+        className="font-bold text-white mt-4 w-fit max-w-60"
       >
-        {artist} • {album}
+        <h1 className="bg-black p-2 rounded-sm bg-opacity-30 truncate">
+          {artist} • {album}
+        </h1>
       </CardItem>
+
       <div className="w-full flex justify-between">
         <CardItem
           as="p"
@@ -50,13 +55,15 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           {release_date}
         </CardItem>
 
-        <CardItem
-          as="p"
-          translateZ="60"
-          className="text-white text-sm bg-black mt-2 p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
-        >
-          <PlusCircledIcon className="cursor-pointer h-8 w-8 hover:scale-[1.15] duration-300" />
-        </CardItem>
+        {actionButton && (
+          <CardItem
+            as="p"
+            translateZ="60"
+            className="text-white text-sm bg-black mt-2 p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
+          >
+            {actionButton}
+          </CardItem>
+        )}
       </div>
     </CardBody>
   </CardContainer>
