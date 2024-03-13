@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import { WrappedResponse } from "@/app/api/wrapped/methods";
 
 import {
@@ -22,16 +20,28 @@ interface WrappedProps {
 function Wrapped({ wrapped }: WrappedProps) {
   // todo add this in tailwind theme
   const accordionColors = [
-    "#4D3000",
-    "#3F2700",
-    "#302008",
-    "#1D180F",
-    "#16120C",
+    // "#4D3000",
+    // "#3F2700",
+    // "#302008",
+    // "#1D180F",
+    // "#16120C",
+    // Other Colors
     // "#E896FA",
     // "#FFFF55",
     // "#83EE92",
     // "#6793EC",
     // "#E19A5A",
+    // Other Colors
+    "#1C1917",
+    "#262220",
+    "#302A27",
+    "#3B3330",
+    "#493E3A",
+    // "#4D3000",
+    // "#3F2700",
+    // "#302008",
+    // "#1D180F",
+    // "#16120C",
   ];
 
   return (
@@ -46,7 +56,9 @@ function Wrapped({ wrapped }: WrappedProps) {
             }}
           >
             <AccordionTrigger className="px-4">
-              <Title>{item.year}</Title>
+              <p className="font-black text-accent text-3xl lg:text-6xl">
+                {item.year}
+              </p>
             </AccordionTrigger>
             <AccordionContent className="p-4">
               {item.albums.length > 0 ? (

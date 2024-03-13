@@ -4,15 +4,15 @@
 
 @layer base {
   :root {
-    --background: 0 17% 8%; /* #1 Tomato */
-    --foreground: 10 86% 89%; /* #12 Tomato */
-    --card: 5 48% 15%; /* #3 Tomato */
+    --background: 270 6% 7%; /* #1 MAUVE */
+    --foreground: 240 6% 94%; /* #12 MAUVE */
+    --card: 260 4% 14%; /* #3 MAUVE */
     --card-foreground: 0 0% 3.9%; /* BLACK */
     --popover: 0 0% 100%; /* WHITE */
     --popover-foreground: 0 0% 3.9%; /* BLACK */
-    --primary: 350 100% 91%; /* CRIMSON 11.5 */
+    --primary: 105 5% 69%; /* OLIVE 11.5 */
     --primary-foreground: 0 0% 98%;
-    --secondary: 348 75% 59%; /* CRIMSON 10 */
+    --secondary: 107 4% 47%; /* OLIVE 10 */
     --secondary-foreground: 0 0% 100%; /* WHITE */
     --muted: 0 0% 96.1%; /* WHITE */
     --muted-foreground: 0 0% 63.9%; /* GRAY */
@@ -20,12 +20,13 @@
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 9 49% 35%;
-    --input: 9 49% 35%;
-    --ring: 9 49% 35%;
+    --border: 270 5% 24%; /* #6 MAUVE */
+    --input: 257 5% 29%; /* #7 MAUVE */
+    --ring: 258 5% 39%; /* #8 MAUVE */
     --radius: 0.5rem;
-    --first-gradient: 10 78% 54%; /* #9 Tomato */
-    --second-gradient: 322 65% 55%;
+    --first-gradient: 292 79% 77%; /* #1 MAUVE */
+    --second-gradient: 246 100% 83%; /* #2 MAUVE */
+    --third-gradient: 260 4% 14%; /* #3 MAUVE */
   }
 }
 
@@ -34,6 +35,29 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply gradient-background text-foreground;
   }
+}
+
+.gradient-background {
+  background: linear-gradient(
+    20deg,
+    rgba(18, 17, 19, 1) 0%,
+    rgba(26, 25, 27, 1) 50%,
+    rgba(35, 34, 37, 1) 100%
+  );
+}
+
+/* GRADIENT TEXT */
+
+.gradient-primary {
+  background: linear-gradient(
+    92.72deg,
+    hsl(var(--first-gradient)) 0%,
+    hsl(var(--second-gradient)) 100%
+  );
+  -webkit-background1-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
 }

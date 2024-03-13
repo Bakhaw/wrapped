@@ -21,15 +21,28 @@ const mockedZineeAlbumCard: AlbumCardProps = {
 
 const mockedZeuAlbumCard: AlbumCardProps = {
   artist: "Zeu",
-  album: "Cobalt",
+  album: "BOSS'S ORDERS",
   image:
-    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2737af412565da017a5db0c9247&w=640&q=100",
+    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b273e821ac44c6fddbd7fe79acdc&w=640&q=100",
   release_date: 2021,
+};
+
+const mockedAlphaAlbumCard: AlbumCardProps = {
+  artist: "Alpha Wann",
+  album: "UNE MAIN LAVE L'AUTRE",
+  image:
+    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2731e546007515b02884d72595f&w=640&q=100",
+  release_date: 2018,
 };
 
 const mockedWrapped: WrappedResponse = [
   {
-    albums: [mockedAlbumCard, mockedZineeAlbumCard, mockedZeuAlbumCard],
+    albums: [
+      mockedAlbumCard,
+      mockedZineeAlbumCard,
+      mockedZeuAlbumCard,
+      mockedAlphaAlbumCard,
+    ],
     year: 2024,
   },
   {
