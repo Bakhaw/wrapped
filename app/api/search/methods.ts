@@ -1,4 +1,4 @@
-type SearchAlbumItem = {
+export type SearchAlbumItem = {
   type: "ALBUM";
   albumId: string;
   playlistId: string;

@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { MinusCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 
-import { searchFromApi } from "@/app/api/search/methods";
+import { SearchAlbumItem, searchFromApi } from "@/app/api/search/methods";
 
 import {
   Select,
@@ -27,6 +28,8 @@ function Home({
   const { replace } = useRouter();
   const { search, year } = searchParams;
 
+  const [selectedAlbums, setSelectedAlbums] = useState<SearchAlbumItem[]>([]);
+
   const {
     isPending,
     error,
@@ -41,11 +44,6 @@ function Home({
     enabled: typeof search === "string" && search !== "",
   });
 
-  const filterSearchResponseByYear = useMemo(
-    () => searchResponse?.filter((album) => album.year?.toString() === year),
-    [searchResponse, year]
-  );
-
   function onSelectYearChange(value: string) {
     const params = new URLSearchParams(searchParams);
 
@@ -57,6 +55,30 @@ function Home({
 
     replace(`${pathname}?${params.toString()}`);
   }
+
+  const isAlbumAddedToWrap = (selectedAlbum: SearchAlbumItem) =>
+    selectedAlbums.find((album) => album.albumId === selectedAlbum.albumId);
+
+  function toggleAddAlbum(selectedAlbum: SearchAlbumItem) {
+    if (isAlbumAddedToWrap(selectedAlbum)) {
+      removeAlbumFromSelection(selectedAlbum);
+    } else {
+      addAlbumToSelection(selectedAlbum);
+    }
+  }
+
+  function addAlbumToSelection(selectedAlbum: SearchAlbumItem) {
+    const newAlbums = [...selectedAlbums, selectedAlbum];
+    setSelectedAlbums(newAlbums);
+  }
+
+  function removeAlbumFromSelection(selectedAlbum: SearchAlbumItem) {
+    const newAlbums = selectedAlbums.filter(
+      (album) => album.albumId !== selectedAlbum.albumId
+    );
+    setSelectedAlbums(newAlbums);
+  }
+
   const currentYear = new Date().getFullYear();
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
@@ -97,25 +119,32 @@ function Home({
         </div>
       )}
 
-      {filterSearchResponseByYear && (
+      {(searchResponse || selectedAlbums.length > 0) && (
         <div className="flex flex-col gap-4">
-          <Title className="text-center md:text-left">Released in {year}</Title>
+          <Title className="text-center md:text-left">
+            Your wrap for {year}
+          </Title>
 
-          {filterSearchResponseByYear?.length === 0 && (
-            <div>
-              No results found for <b>{search}</b> in{" "}
-              <b>{year ?? currentYear}</b>
+          {selectedAlbums.length === 0 && (
+            <div className="text-center md:text-left">
+              Add your favorite albums here
             </div>
           )}
 
           <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
-            {filterSearchResponseByYear?.map((album) => (
+            {selectedAlbums.map((album) => (
               <li key={album.albumId} className="mb-2 w-fit">
                 <AlbumCard
                   album={album.name}
                   artist={album.artist.name}
-                  image={album.thumbnails[3].url}
+                  image={album.thumbnails[3]?.url}
                   release_date={album.year ?? ""}
+                  actionButton={
+                    <MinusCircledIcon
+                      className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
+                      onClick={() => toggleAddAlbum(album)}
+                    />
+                  }
                 />
               </li>
             ))}
@@ -135,6 +164,19 @@ function Home({
                   artist={album.artist.name}
                   image={album.thumbnails[3]?.url}
                   release_date={album.year ?? ""}
+                  actionButton={
+                    isAlbumAddedToWrap(album) ? (
+                      <MinusCircledIcon
+                        className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
+                        onClick={() => toggleAddAlbum(album)}
+                      />
+                    ) : (
+                      <PlusCircledIcon
+                        className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
+                        onClick={() => toggleAddAlbum(album)}
+                      />
+                    )
+                  }
                 />
               </li>
             ))}
