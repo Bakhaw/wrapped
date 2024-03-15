@@ -18,7 +18,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   release_date,
 }) => (
   <CardContainer className="group rounded-xl">
-    <CardBody className="relative p-6 bg-transparent h-full rounded-xl border border-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
+    <CardBody className="overflow-hidden p-6 bg-transparent h-full rounded-xl border border-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50">
         <Image
           src={image}
@@ -33,7 +33,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         src={image}
         height={200}
         width={200}
-        className="absolute -z-10 inset-0 blur-sm h-full w-full object-cover rounded-xl shadow-xl"
+        className="absolute -z-10 inset-0 blur-md h-full w-full object-cover rounded-xl shadow-xl"
         alt={album}
       />
 
@@ -46,11 +46,11 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         </h1>
       </CardItem>
 
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between mt-2">
         <CardItem
           as="p"
           translateZ="60"
-          className="text-white h-fit text-sm mt-2 bg-black p-2 rounded-sm bg-opacity-30"
+          className="text-white h-fit text-sm  bg-black p-2 rounded-sm bg-opacity-30"
         >
           {release_date}
         </CardItem>
@@ -59,7 +59,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           <CardItem
             as="p"
             translateZ="60"
-            className="text-white text-sm bg-black mt-2 p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
+            className="flex items-center justify-center text-white text-sm bg-black p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
           >
             {actionButton}
           </CardItem>

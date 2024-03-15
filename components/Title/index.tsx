@@ -8,7 +8,7 @@ interface TitleProps {
 const Title: React.FC<TitleProps> = ({ children, className }) => (
   <h1
     className={cn(
-      "gradient-primary relative right-2 font-bold first:text-accent text-3xl lg:text-6xl",
+      "uppercase gradient-primary relative right-2 font-bold first:text-accent text-3xl lg:text-6xl",
       className
     )}
   >

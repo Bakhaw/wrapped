@@ -35,28 +35,18 @@
     @apply border-border;
   }
   body {
-    @apply gradient-background text-foreground;
+    @apply bg-background text-foreground;
   }
 }
 
-.gradient-background {
-  background: linear-gradient(
-    20deg,
-    rgba(18, 17, 19, 1) 0%,
-    rgba(26, 25, 27, 1) 50%,
-    rgba(35, 34, 37, 1) 100%
-  );
-}
-
 /* GRADIENT TEXT */
-
 .gradient-primary {
   background: linear-gradient(
     92.72deg,
     hsl(var(--first-gradient)) 0%,
     hsl(var(--second-gradient)) 100%
   );
-  -webkit-background1-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
