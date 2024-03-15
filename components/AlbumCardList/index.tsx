@@ -1,50 +1,44 @@
-import { useRef, useState } from "react";
 import { MinusCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 
-import {
-  SearchAlbumItem,
-  SearchResponse as SearchResponseType,
-} from "../api/search/methods";
+import { Album } from "@/types";
 
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Drawer,
+//   DrawerClose,
+//   DrawerContent,
+//   DrawerDescription,
+//   DrawerFooter,
+//   DrawerHeader,
+//   DrawerTitle,
+//   DrawerTrigger,
+// } from "@/components/ui/drawer";
 
 import AlbumCard from "@/components/AlbumCard";
 
-interface SearchResponseProps {
-  isAlbumAddedToWrap: (album: SearchAlbumItem) => boolean;
-  onAdd: (album: SearchAlbumItem) => void;
-  onRemove: (album: SearchAlbumItem) => void;
-  searchResponse: SearchResponseType;
-  year: string;
+interface AlbumCardListProps {
+  isAlbumAddedToWrap: (album: Album) => boolean;
+  onAdd: (album: Album) => void;
+  onRemove: (album: Album) => void;
+  albums: Album[];
 }
 
-function SearchResponse({
+function AlbumCardList({
+  albums,
   isAlbumAddedToWrap,
-  onRemove,
   onAdd,
-  searchResponse,
-  year,
-}: SearchResponseProps) {
-  //   function handleDrawerTriggerClick(album: SearchAlbumItem) {
+  onRemove,
+}: AlbumCardListProps) {
+  // todo handle drawer showing when an album release isn't the same year as the selected year
+  //   function handleDrawerTriggerClick(album: Album) {
   //     if (album.year?.toString() !== year?.toString()) {
   //       setDrawerOpen;
   //     } else {
   //       onAdd(album);
   //     }
   //   }
-  const [open, setOpen] = useState(false);
 
-  const ActionButton = ({ album }: { album: SearchAlbumItem }) =>
+  const ActionButton = ({ album }: { album: Album }) =>
     isAlbumAddedToWrap(album) ? (
       <MinusCircledIcon
         className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
@@ -59,7 +53,7 @@ function SearchResponse({
 
   return (
     <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
-      {searchResponse.map((album) => (
+      {albums.map((album) => (
         <li key={album.albumId}>
           <AlbumCard
             album={album.name}
@@ -74,4 +68,4 @@ function SearchResponse({
   );
 }
 
-export default SearchResponse;
+export default AlbumCardList;

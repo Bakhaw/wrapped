@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { MinusCircledIcon } from "@radix-ui/react-icons";
 
-import { SearchAlbumItem, searchFromApi } from "@/app/api/search/methods";
+import { Album } from "@/types";
+
+import { searchFromApi } from "@/app/api/search/methods";
 
 import {
   Select,
@@ -15,10 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import AlbumCard from "@/components/AlbumCard";
+import AlbumCardList from "@/components/AlbumCardList";
 import SearchBar from "@/components/SearchBar";
 import Title from "@/components/Title";
-import SearchResponse from "./search-response";
 
 function Home({
   searchParams,
@@ -29,7 +29,7 @@ function Home({
   const { replace } = useRouter();
   const { search, year } = searchParams;
 
-  const [selectedAlbums, setSelectedAlbums] = useState<SearchAlbumItem[]>([]);
+  const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
 
   const {
     isPending,
@@ -57,17 +57,18 @@ function Home({
     replace(`${pathname}?${params.toString()}`);
   }
 
-  const isAlbumAddedToWrap = (selectedAlbum: SearchAlbumItem) =>
-    Boolean(
+  function isAlbumAddedToWrap(selectedAlbum: Album) {
+    return Boolean(
       selectedAlbums.find((album) => album.albumId === selectedAlbum.albumId)
     );
+  }
 
-  function addAlbumToSelection(selectedAlbum: SearchAlbumItem) {
+  function addAlbumToSelection(selectedAlbum: Album) {
     const newAlbums = [...selectedAlbums, selectedAlbum];
     setSelectedAlbums(newAlbums);
   }
 
-  function removeAlbumFromSelection(selectedAlbum: SearchAlbumItem) {
+  function removeAlbumFromSelection(selectedAlbum: Album) {
     const newAlbums = selectedAlbums.filter(
       (album) => album.albumId !== selectedAlbum.albumId
     );
@@ -83,7 +84,7 @@ function Home({
 
   return (
     <section className="flex flex-col gap-8 px-4">
-      <Title className="text-center md:text-left">Add a new wrap</Title>
+      <Title className="text-center md:text-left">new wrap</Title>
 
       <div className="flex flex-col gap-2">
         <label>Select a year</label>
@@ -112,66 +113,64 @@ function Home({
         </div>
       )}
 
-      {search && searchResponse?.length === 0 && (
-        <div>
-          No results found for <b>{search}</b> in <b>{year}</b>
-        </div>
-      )}
-
-      {year && searchResponse && searchResponse.length > 0 && (
+      {searchResponse && searchResponse.length > 0 && (
         <div className="flex flex-col gap-4">
           <Title className="text-center md:text-left">
             Results for &quot;{search}&quot; in {year}
           </Title>
 
-          <SearchResponse
-            isAlbumAddedToWrap={isAlbumAddedToWrap}
-            onAdd={addAlbumToSelection}
-            onRemove={removeAlbumFromSelection}
-            searchResponse={filterSearchResponseByYear ?? []}
-            year={year}
-          />
+          {filterSearchResponseByYear?.length === 0 ? (
+            <div>
+              No results found for <b>{search}</b> in <b>{year}</b>
+            </div>
+          ) : (
+            <AlbumCardList
+              albums={filterSearchResponseByYear ?? []}
+              isAlbumAddedToWrap={isAlbumAddedToWrap}
+              onAdd={addAlbumToSelection}
+              onRemove={removeAlbumFromSelection}
+            />
+          )}
         </div>
       )}
 
-      {year && searchResponse && searchResponse.length > 0 && (
+      {searchResponse && (
         <div className="flex flex-col gap-4">
           <Title className="text-center md:text-left">
             All results for &quot;{search}&quot;
           </Title>
 
-          <SearchResponse
-            isAlbumAddedToWrap={isAlbumAddedToWrap}
-            onAdd={addAlbumToSelection}
-            onRemove={removeAlbumFromSelection}
-            searchResponse={searchResponse}
-            year={year}
-          />
+          {searchResponse?.length === 0 ? (
+            <div>
+              No results found for <b>{search}</b>
+            </div>
+          ) : (
+            <AlbumCardList
+              albums={searchResponse}
+              isAlbumAddedToWrap={isAlbumAddedToWrap}
+              onAdd={addAlbumToSelection}
+              onRemove={removeAlbumFromSelection}
+            />
+          )}
         </div>
       )}
 
-      {searchResponse && searchResponse.length > 0 && (
-        <div className="flex flex-col gap-4">
+      {year && searchResponse && searchResponse.length > 0 && (
+        <div className="flex flex-col gap-4 min-h-96">
           <Title className="text-center md:text-left">your {year} wrap</Title>
 
-          <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0 min-h-96 w-full border">
-            {selectedAlbums.map((album) => (
-              <li key={album.albumId}>
-                <AlbumCard
-                  album={album.name}
-                  artist={album.artist.name}
-                  image={album.thumbnails[3]?.url}
-                  release_date={album.year ?? ""}
-                  actionButton={
-                    <MinusCircledIcon
-                      className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
-                      onClick={() => removeAlbumFromSelection(album)}
-                    />
-                  }
-                />
-              </li>
-            ))}
-          </ul>
+          {selectedAlbums.length === 0 ? (
+            <div>
+              Your favorite <b>{year}</b> albums will be shown here
+            </div>
+          ) : (
+            <AlbumCardList
+              albums={selectedAlbums}
+              isAlbumAddedToWrap={isAlbumAddedToWrap}
+              onAdd={addAlbumToSelection}
+              onRemove={removeAlbumFromSelection}
+            />
+          )}
         </div>
       )}
     </section>

@@ -18,13 +18,13 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   release_date,
 }) => (
   <CardContainer className="group rounded-xl">
-    <CardBody className="overflow-hidden p-6 bg-transparent h-full rounded-xl border border-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
+    <CardBody className="p-6 bg-transparent h-full rounded-xl ring-1 ring-white/[0.3] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50">
         <Image
           src={image}
           height={200}
           width={200}
-          className="h-full w-full object-cover rounded-xl shadow-xl border border-white/[0.4]"
+          className="h-full w-full object-cover rounded-xl shadow-xl group-hover:ring-1 group-hover:ring-white/[0.3]"
           alt={album}
         />
       </CardItem>
@@ -33,7 +33,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         src={image}
         height={200}
         width={200}
-        className="absolute -z-10 inset-0 blur-md h-full w-full object-cover rounded-xl shadow-xl"
+        className="absolute -z-10 inset-0 blur-sm overflow-hidden h-full w-full opacity-40 group-hover:opacity-100 duration-300 object-cover rounded-xl shadow-xl"
         alt={album}
       />
 

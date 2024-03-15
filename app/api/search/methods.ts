@@ -1,21 +1,6 @@
-export type SearchAlbumItem = {
-  type: "ALBUM";
-  albumId: string;
-  playlistId: string;
-  name: string;
-  artist: {
-    artistId: string | null;
-    name: string;
-  };
-  year: number | null;
-  thumbnails: {
-    url: string;
-    width: number;
-    height: number;
-  }[];
-};
+import { Album } from "@/types";
 
-export type SearchResponse = SearchAlbumItem[];
+export type SearchResponse = Album[];
 
 export async function searchFromApi(query: string): Promise<SearchResponse> {
   const url = `/api/search?query=${query}`;
