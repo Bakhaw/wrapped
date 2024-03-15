@@ -3,7 +3,7 @@ import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 export interface AlbumCardProps {
-  actionButton: React.ReactNode;
+  actionButton?: React.ReactNode;
   artist: string;
   album: string;
   image: string;
