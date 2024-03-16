@@ -157,7 +157,7 @@ function Home({
       )}
 
       {year && searchResponse && searchResponse.length > 0 && (
-        <div className="flex flex-col gap-4 min-h-96">
+        <div className="flex flex-col gap-4">
           <Title className="text-center md:text-left">your {year} wrap</Title>
 
           {selectedAlbums.length === 0 ? (
