@@ -121,7 +121,7 @@ function Home({
           </Title>
 
           {filterSearchResponseByYear?.length === 0 ? (
-            <div>
+            <div className="text-center md:text-left">
               No results found for <b>{search}</b> in <b>{year}</b>
             </div>
           ) : (
@@ -142,7 +142,7 @@ function Home({
           </Title>
 
           {searchResponse?.length === 0 ? (
-            <div>
+            <div className="text-center md:text-left">
               No results found for <b>{search}</b>
             </div>
           ) : (
@@ -161,7 +161,7 @@ function Home({
           <Title className="text-center md:text-left">your {year} wrap</Title>
 
           {selectedAlbums.length === 0 ? (
-            <div>
+            <div className="text-center md:text-left">
               Your favorite <b>{year}</b> albums will be shown here
             </div>
           ) : (
