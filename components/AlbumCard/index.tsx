@@ -4,26 +4,26 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 export interface AlbumCardProps {
   actionButton?: React.ReactNode;
-  artist: string;
   album: string;
+  artist: string;
   image: string;
   release_date: string | number;
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({
   actionButton,
-  artist,
   album,
+  artist,
   image,
   release_date,
 }) => (
-  <CardContainer className="group rounded-xl">
-    <CardBody className="p-6 bg-transparent h-full rounded-xl ring-1 ring-white/[0.3] hover:shadow-2xl hover:shadow-white/[0.1]">
-      <CardItem translateZ="50">
+  <CardContainer className="group rounded-xl h-fit w-72">
+    <CardBody className="p-4 bg-transparent h-full rounded-xl ring-1 ring-white/[0.3] hover:shadow-2xl hover:shadow-white/[0.1]">
+      <CardItem translateZ="50" className="mx-auto">
         <Image
           src={image}
-          height={200}
-          width={200}
+          height={140}
+          width={140}
           className="h-full w-full object-cover rounded-xl shadow-xl group-hover:ring-1 group-hover:ring-white/[0.3]"
           alt={album}
         />
@@ -42,7 +42,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         className="font-bold text-white mt-4 w-fit max-w-60"
       >
         <h1 className="bg-black p-2 rounded-sm bg-opacity-30 truncate">
-          {artist} • {album}
+          {artist} - {album}
         </h1>
       </CardItem>
 

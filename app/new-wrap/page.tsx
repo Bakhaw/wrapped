@@ -8,6 +8,7 @@ import { Album } from "@/types";
 
 import { searchFromApi } from "@/app/api/search/methods";
 
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -172,6 +173,10 @@ function Home({
             />
           )}
         </div>
+      )}
+
+      {searchResponse && (
+        <Button disabled={selectedAlbums.length === 0}>Save</Button>
       )}
     </section>
   );

@@ -52,7 +52,7 @@ function AlbumCardList({
     );
 
   return (
-    <ul className="flex flex-wrap gap-4 justify-center md:justify-start mx-auto md:mx-0">
+    <ul className="flex flex-wrap items-center justify-center gap-4 md:justify-start mx-auto md:mx-0">
       {albums.map((album) => (
         <li key={album.albumId}>
           <AlbumCard

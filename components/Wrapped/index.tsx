@@ -56,7 +56,7 @@ function Wrapped({ wrapped }: WrappedProps) {
             }}
           >
             <AccordionTrigger className="px-4">
-              <p className="font-black text-accent text-3xl lg:text-6xl">
+              <p className="font-black text-accent text-3xl md:text-6xl">
                 {item.year}
               </p>
             </AccordionTrigger>
