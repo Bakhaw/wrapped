@@ -1,6 +1,7 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
 
-import { WrappedResponse } from "@/app/api/wrapped/methods";
+import { getWrapped } from "@/app/api/wrapped/methods";
 
 import {
   Accordion,
@@ -11,13 +12,17 @@ import {
 
 import AddNewWrapButton from "@/components/AddNewWrapButton";
 import AlbumCard from "@/components/AlbumCard";
-import Title from "@/components/Title";
 
-interface WrappedProps {
-  wrapped: WrappedResponse;
-}
+function Wrapped() {
+  const {
+    isPending,
+    error,
+    data: wrapped,
+  } = useQuery({
+    queryKey: ["getWrapped"],
+    queryFn: async () => await getWrapped(),
+  });
 
-function Wrapped({ wrapped }: WrappedProps) {
   // todo add this in tailwind theme
   const accordionColors = [
     // "#4D3000",
@@ -43,6 +48,15 @@ function Wrapped({ wrapped }: WrappedProps) {
     // "#1D180F",
     // "#16120C",
   ];
+
+  if (error) return null;
+
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-full">
+        Wrappping...
+      </div>
+    );
 
   return (
     <ul className="flex flex-col justify-center gap-4">

@@ -1,37 +1,26 @@
-"use client";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
 
-import { useQuery } from "@tanstack/react-query";
-
-import { getWrapped } from "@/app/api/wrapped/methods";
+import { authOptions } from "@/lib/auth";
 
 import AddNewWrapButton from "@/components/AddNewWrapButton";
 import Title from "@/components/Title";
 import Wrapped from "@/components/Wrapped";
 
-function Home() {
-  const {
-    isPending,
-    error,
-    data: wrapped,
-  } = useQuery({
-    queryKey: ["getWrapped"],
-    queryFn: async () => await getWrapped(),
-  });
+async function Home() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) return <Link href="/sign-in">Sign in</Link>;
 
   return (
     <section className="flex flex-col h-80">
       <div className="flex justify-between items-center gap-4 p-4">
+        <span>{session.user.username}</span>
         <Title>WRAPPPED</Title>
         <AddNewWrapButton />
       </div>
 
-      {isPending && (
-        <div className="flex justify-center items-center h-full">
-          Wrappping...
-        </div>
-      )}
-
-      {wrapped && <Wrapped wrapped={wrapped} />}
+      <Wrapped />
     </section>
   );
 }
