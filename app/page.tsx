@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 import AddNewWrapButton from "@/components/AddNewWrapButton";
+import SignOutButton from "@/components/SignOutButton";
 import Title from "@/components/Title";
 import Wrapped from "@/components/Wrapped";
 
@@ -15,9 +16,13 @@ async function Home() {
   return (
     <section className="flex flex-col h-80">
       <div className="flex justify-between items-center gap-4 p-4">
-        <span>{session.user.username}</span>
-        <Title>WRAPPPED</Title>
         <AddNewWrapButton />
+        <Title>WRAPPPED</Title>
+
+        <div className="flex gap-2">
+          <span>Welcome, {session.user.username}</span>
+          <SignOutButton />
+        </div>
       </div>
 
       <Wrapped />
