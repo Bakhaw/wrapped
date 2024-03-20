@@ -50,8 +50,6 @@ const SignInForm = () => {
       router.refresh();
       router.push("/");
     }
-
-    console.log("sign in", signInData);
   };
 
   return (
