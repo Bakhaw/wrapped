@@ -147,10 +147,6 @@ function SignUpForm() {
           Sign up
         </Button>
       </form>
-      <div className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
-        or
-      </div>
-      <Button disabled>Sign up with Google</Button>
       <p className="text-center text-sm text-gray-600 mt-2">
         Already have an account ?&nbsp;
         <Link className="text-blue-500 hover:underline" href="/sign-in">
