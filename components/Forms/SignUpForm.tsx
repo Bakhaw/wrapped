@@ -50,8 +50,6 @@ function SignUpForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
-
     try {
       const response = await fetch("/api/user", {
         method: "POST",
@@ -71,6 +69,7 @@ function SignUpForm() {
         console.error(json.message);
       }
 
+      // todo show an altert to tell the user his account is successfully created
       if (json.status === 201) {
         router.push("/sign-in");
       }
