@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,8 +14,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Icons } from "@/components/ui/icons";
+import { Input } from "@/components/ui/input";
 
 const FormSchema = z
   .object({
@@ -66,12 +67,12 @@ function SignUpForm() {
       const json = await response.json();
 
       if (json.status === 409) {
-        console.error(json.message);
+        form.setError(json.field, { message: json.message });
       }
 
       // todo show an altert to tell the user his account is successfully created
       if (json.status === 201) {
-        router.push("/sign-in");
+        router.push(`/sign-in?email=${values.email}`);
       }
     } catch (error) {
       console.error(error);
@@ -81,7 +82,7 @@ function SignUpForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="space-y-2">
+        <div className="space-y-6">
           <FormField
             control={form.control}
             name="username"
@@ -102,7 +103,7 @@ function SignUpForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="mail@example.com" {...field} />
+                  <Input placeholder="johndoe@mail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,11 +116,7 @@ function SignUpForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
+                  <Input type="password" placeholder="********" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -130,27 +127,26 @@ function SignUpForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Re-Enter your password</FormLabel>
+                <FormLabel>Confirm password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Re-Enter your password"
-                    type="password"
-                    {...field}
-                  />
+                  <Input placeholder="********" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button className="w-full mt-6" type="submit">
-          Sign up
+        <Button className="w-full mt-6" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Sign In
         </Button>
       </form>
       <p className="text-center text-sm text-gray-600 mt-2">
         Already have an account ?&nbsp;
         <Link className="text-blue-500 hover:underline" href="/sign-in">
-          Sign in
+          Sign In
         </Link>
       </p>
     </Form>

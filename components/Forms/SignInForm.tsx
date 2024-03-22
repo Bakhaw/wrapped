@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 
 import { Button } from "../ui/button";
 import {
@@ -15,8 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { Icons } from "../ui/icons";
 import { Input } from "../ui/input";
-import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -28,11 +29,13 @@ const FormSchema = z.object({
 
 const SignInForm = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  const emailFromURL = params.get("email");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
+      email: emailFromURL ?? "",
       password: "",
     },
   });
@@ -45,7 +48,8 @@ const SignInForm = () => {
     });
 
     if (signInData?.error) {
-      console.error(signInData.error);
+      form.setError("email", { message: "Email or password is wrong" });
+      form.setError("password", { message: "Email or password is wrong" });
     } else {
       router.refresh();
       router.push("/");
@@ -55,7 +59,7 @@ const SignInForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="space-y-2">
+        <div className="space-y-6">
           <FormField
             control={form.control}
             name="email"
@@ -63,7 +67,7 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="mail@example.com" {...field} />
+                  <Input placeholder="johndoe@mail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,25 +80,24 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
+                  <Input type="password" placeholder="********" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button className="w-full mt-6" type="submit">
-          Sign in
+        <Button className="w-full mt-6" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Sign In
         </Button>
       </form>
       <p className="text-center text-sm text-gray-600 mt-2">
         Still don&apos;t have an account ?&nbsp;
         <Link className="text-blue-500 hover:underline" href="/sign-up">
-          Sign up
+          Sign Up
         </Link>
       </p>
     </Form>
