@@ -29,6 +29,7 @@ export async function POST(req: Request) {
         user: null,
         message: "This email already exists",
         status: 409,
+        field: "email",
       });
     }
 
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
         user: null,
         message: "This username already exists",
         status: 409,
+        field: "username",
       });
     }
 
