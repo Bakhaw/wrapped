@@ -87,7 +87,10 @@ const SignInForm = () => {
             )}
           />
         </div>
-        <Button className="w-full mt-6" disabled={form.formState.isSubmitting}>
+        <Button
+          className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+          disabled={form.formState.isSubmitting}
+        >
           {form.formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
@@ -96,7 +99,10 @@ const SignInForm = () => {
       </form>
       <p className="text-center text-sm text-gray-600 mt-2">
         Still don&apos;t have an account ?&nbsp;
-        <Link className="text-blue-500 hover:underline" href="/sign-up">
+        <Link
+          className="text-second-gradient/80 hover:text-second-gradient"
+          href="/sign-up"
+        >
           Sign Up
         </Link>
       </p>

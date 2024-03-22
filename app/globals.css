@@ -51,3 +51,12 @@
   -webkit-background-clip: text;
   background-clip: text;
 }
+
+/* GRADIENT TEXT */
+.gradient-bg {
+  background: linear-gradient(
+    92.72deg,
+    hsl(var(--first-gradient)) 0%,
+    hsl(var(--second-gradient)) 100%
+  );
+}
