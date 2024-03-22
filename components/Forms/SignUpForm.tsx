@@ -140,7 +140,7 @@ function SignUpForm() {
           {form.formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Sign In
+          Sign Up
         </Button>
       </form>
       <p className="text-center text-sm text-gray-600 mt-2">
