@@ -1,69 +1,68 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 
-import { AlbumCardProps } from "@/components/AlbumCard";
-import { WrappedResponse } from "./methods";
+import { authOptions } from "@/lib/auth";
+import { db } from "@/lib/db";
 
-const mockedAlbumCard: AlbumCardProps = {
-  artist: "Josman",
-  album: "J.000.$",
-  image:
-    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2735a7c027718559ea175420718&w=1920&q=100",
-  release_date: 2023,
-};
-
-const mockedZineeAlbumCard: AlbumCardProps = {
-  artist: "Zinée",
-  album: "Cobalt",
-  image:
-    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2737af412565da017a5db0c9247&w=640&q=100",
-  release_date: 2021,
-};
-
-const mockedZeuAlbumCard: AlbumCardProps = {
-  artist: "Zeu",
-  album: "BOSS'S ORDERS",
-  image:
-    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b273e821ac44c6fddbd7fe79acdc&w=640&q=100",
-  release_date: 2021,
-};
-
-const mockedAlphaAlbumCard: AlbumCardProps = {
-  artist: "Alpha Wann",
-  album: "UNE MAIN LAVE L'AUTRE",
-  image:
-    "https://music.bakhaw.dev/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2731e546007515b02884d72595f&w=640&q=100",
-  release_date: 2018,
-};
-
-const mockedWrapped: WrappedResponse = [
-  {
-    albums: [
-      mockedAlbumCard,
-      mockedZineeAlbumCard,
-      mockedZeuAlbumCard,
-      mockedAlphaAlbumCard,
-    ],
-    year: 2024,
-  },
-  {
-    albums: [mockedAlbumCard],
-    year: 2023,
-  },
-  {
-    albums: [mockedAlbumCard, mockedAlbumCard],
-    year: 2022,
-  },
-  {
-    albums: [],
-    year: 2021,
-  },
-  {
-    albums: [],
-    year: 2020,
-  },
-];
-
-// TODO link this function with back-end service (strapi)
 export async function GET(req: Request) {
-  return NextResponse.json({ albums: mockedWrapped });
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user.email)
+    return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
+
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        email: session.user.email,
+      },
+      include: {
+        wrapped: {
+          include: {
+            albums: true,
+          },
+        },
+      },
+    });
+    const userWrapped = user?.wrapped ?? [];
+    return NextResponse.json({ wrapped: userWrapped }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({ albums: [] });
+}
+
+export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (!session)
+    return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
+
+  const { albums, year } = await req.json();
+
+  try {
+    const newWrap = await db.wrap.create({
+      data: {
+        albums: {
+          create: albums,
+        },
+        year,
+        ownerEmail: session.user.email,
+      },
+    });
+
+    return NextResponse.json({ newWrap }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
 }

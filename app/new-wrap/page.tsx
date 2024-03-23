@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Album as PrismaAlbum } from "@prisma/client";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { Album } from "@/types";
 
 import { searchFromApi } from "@/app/api/search/methods";
+import { saveWrap } from "@/app/api/wrapped/methods";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -74,6 +76,25 @@ function Home({
       (album) => album.albumId !== selectedAlbum.albumId
     );
     setSelectedAlbums(newAlbums);
+  }
+
+  async function handleSaveButtonClick() {
+    if (!year) return;
+
+    const formattedAlbums = selectedAlbums.map((album) => ({
+      album: album.name,
+      artist: album.artist.name,
+      id: album.albumId,
+      image: album.thumbnails[3].url,
+      release_date: album.year?.toString() ?? year,
+    }));
+
+    const savedWrap = await saveWrap({
+      albums: formattedAlbums,
+      year,
+    });
+
+    console.log(savedWrap);
   }
 
   const filterSearchResponseByYear = searchResponse?.filter(
@@ -176,7 +197,12 @@ function Home({
       )}
 
       {searchResponse && (
-        <Button disabled={selectedAlbums.length === 0}>Save</Button>
+        <Button
+          disabled={selectedAlbums.length === 0}
+          onClick={handleSaveButtonClick}
+        >
+          Save
+        </Button>
       )}
     </section>
   );

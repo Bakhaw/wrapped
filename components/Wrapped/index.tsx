@@ -25,11 +25,6 @@ function Wrapped() {
 
   // todo add this in tailwind theme
   const accordionColors = [
-    // "#4D3000",
-    // "#3F2700",
-    // "#302008",
-    // "#1D180F",
-    // "#16120C",
     // Other Colors
     // "#E896FA",
     // "#FFFF55",
@@ -49,12 +44,21 @@ function Wrapped() {
     // "#16120C",
   ];
 
+  console.log("wrapped", wrapped);
+
   if (error) return null;
 
   if (isPending)
     return (
       <div className="flex justify-center items-center h-full">
         Wrappping...
+      </div>
+    );
+
+  if (wrapped.length === 0)
+    return (
+      <div className="flex justify-center items-center h-full">
+        No wraps found
       </div>
     );
 

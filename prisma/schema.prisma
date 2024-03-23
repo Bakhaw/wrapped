@@ -8,12 +8,30 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  emailVerified DateTime?
-  username      String    @unique
-  image         String?
-  password      String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  email     String   @unique
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+  password  String
+  wrapped   Wrap[]
+}
+
+model Album {
+  id           String  @id @default(cuid())
+  album        String
+  artist       String
+  image        String
+  release_date String
+  wrap         Wrap?   @relation(fields: [wrapId], references: [id])
+  wrapId       String?
+}
+
+model Wrap {
+  id         String  @id @default(cuid())
+  albums     Album[]
+  year       String
+  owner      User?   @relation(fields: [ownerEmail], references: [email])
+  ownerEmail String?
 }
