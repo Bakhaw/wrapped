@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 
+import Header from "@/components/Header";
 import Providers from "@/components/Providers";
 
 import "./globals.css";
@@ -25,10 +26,11 @@ export default function RootLayout({
         <Providers>
           <div
             className={cn(
-              "min-h-screen max-w-screen-lg mx-auto py-8",
+              "min-h-screen max-w-screen-md mx-auto",
               montserrat.className
             )}
           >
+            <Header />
             {children}
           </div>
         </Providers>
