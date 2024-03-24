@@ -1,22 +1,10 @@
+import { getServerSession } from "next-auth";
 import { AlbumCardProps } from "@/components/AlbumCard";
-
-interface WrappedItem {
-  albums: AlbumCardProps[];
-  year: number;
-}
-
-export type WrappedResponse = WrappedItem[];
-
-export async function getWrapped(): Promise<WrappedResponse> {
-  const res = await fetch("/api/wrapped");
-  const { wrapped } = await res.json();
-
-  return wrapped;
-}
+import { db } from "@/lib/db";
 
 // TODO fix any type
 export async function saveWrap({ albums, year }: any) {
-  const res = await fetch("/api/wrapped", {
+  const res = await fetch("/api/wrap", {
     method: "POST",
     body: JSON.stringify({
       albums,

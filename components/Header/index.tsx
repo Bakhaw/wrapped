@@ -27,7 +27,9 @@ async function Header() {
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:py-8">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <Title className="md:text-4xl">WRAPPPED</Title>
+        <Link href="/">
+          <Title className="md:text-4xl">WRAPPPED</Title>
+        </Link>
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -66,9 +68,9 @@ async function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{session?.user.username}</DropdownMenuLabel>
+            <DropdownMenuLabel>@{session?.user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="py-0">
               <SignOutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>

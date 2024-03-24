@@ -1,7 +1,8 @@
 "use client";
+
 import { useQuery } from "@tanstack/react-query";
 
-import { getWrapped } from "@/app/api/wrapped/methods";
+import { getUserWrapped } from "@/app/api/user/methods";
 
 import {
   Accordion,
@@ -19,8 +20,8 @@ function Wrapped() {
     error,
     data: wrapped,
   } = useQuery({
-    queryKey: ["getWrapped"],
-    queryFn: async () => await getWrapped(),
+    queryKey: ["getUserWrapped"],
+    queryFn: async () => await getUserWrapped(),
   });
 
   // todo add this in tailwind theme
@@ -44,8 +45,6 @@ function Wrapped() {
     // "#16120C",
   ];
 
-  console.log("wrapped", wrapped);
-
   if (error) return null;
 
   if (isPending)
@@ -61,6 +60,8 @@ function Wrapped() {
         No wraps found
       </div>
     );
+
+  console.log("wrapped", wrapped);
 
   return (
     <ul className="flex flex-col justify-center gap-4">

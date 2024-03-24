@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Album as PrismaAlbum } from "@prisma/client";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { Album } from "@/types";
 
 import { searchFromApi } from "@/app/api/search/methods";
-import { saveWrap } from "@/app/api/wrapped/methods";
+// import { getWrap, saveWrap } from "@/app/api/wrapped/methods";
 
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 import {
   Select,
   SelectContent,
@@ -33,6 +33,7 @@ function Home({
   const { search, year } = searchParams;
 
   const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
+  const [isSavingWrap, setIsSavingWrap] = useState(false);
 
   const {
     isPending,
@@ -47,6 +48,17 @@ function Home({
     },
     enabled: typeof search === "string" && search !== "",
   });
+
+  useEffect(() => {
+    if (!year) return;
+
+    async function initWrap(year: string) {
+      // const wrap = await getWrap(year);
+      // console.log("here", wrap);
+    }
+
+    initWrap(year);
+  }, [year]);
 
   function onSelectYearChange(value: string) {
     const params = new URLSearchParams(searchParams);
@@ -81,6 +93,8 @@ function Home({
   async function handleSaveButtonClick() {
     if (!year) return;
 
+    setIsSavingWrap(true);
+
     const formattedAlbums = selectedAlbums.map((album) => ({
       album: album.name,
       artist: album.artist.name,
@@ -89,12 +103,12 @@ function Home({
       release_date: album.year?.toString() ?? year,
     }));
 
-    const savedWrap = await saveWrap({
-      albums: formattedAlbums,
-      year,
-    });
+    // await saveWrap({
+    //   albums: formattedAlbums,
+    //   year,
+    // });
 
-    console.log(savedWrap);
+    setIsSavingWrap(false);
   }
 
   const filterSearchResponseByYear = searchResponse?.filter(
@@ -105,7 +119,7 @@ function Home({
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
   return (
-    <section className="flex flex-col gap-8 px-4">
+    <section className="flex flex-col gap-8 p-4">
       <Title className="text-center md:text-left">new wrap</Title>
 
       <div className="flex flex-col gap-2">
@@ -198,9 +212,13 @@ function Home({
 
       {searchResponse && (
         <Button
-          disabled={selectedAlbums.length === 0}
+          className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+          disabled={selectedAlbums.length === 0 || isSavingWrap}
           onClick={handleSaveButtonClick}
         >
+          {isSavingWrap && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
           Save
         </Button>
       )}

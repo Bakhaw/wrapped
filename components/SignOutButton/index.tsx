@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 
 function SignOutButton() {
   return (
-    <Button onClick={() => signOut({ callbackUrl: "/sign-in" })}>
+    <Button
+      className="p-0"
+      onClick={() => signOut({ callbackUrl: "/sign-in" })}
+    >
       Sign out
     </Button>
   );
