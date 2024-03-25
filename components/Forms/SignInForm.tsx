@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -27,10 +28,12 @@ const FormSchema = z.object({
     .min(8, "Password must have than 8 characters"),
 });
 
-const SignInForm = () => {
+function SignInForm() {
   const router = useRouter();
   const params = useSearchParams();
   const emailFromURL = params.get("email");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -41,6 +44,8 @@ const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
+
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
@@ -80,7 +85,12 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="********" {...field} />
+                  <Input
+                    autoFocus={Boolean(emailFromURL)}
+                    type="password"
+                    placeholder="********"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,11 +99,9 @@ const SignInForm = () => {
         </div>
         <Button
           className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-          disabled={form.formState.isSubmitting}
+          disabled={isLoading}
         >
-          {form.formState.isSubmitting && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
+          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Sign In
         </Button>
       </form>
@@ -108,6 +116,6 @@ const SignInForm = () => {
       </p>
     </Form>
   );
-};
+}
 
 export default SignInForm;

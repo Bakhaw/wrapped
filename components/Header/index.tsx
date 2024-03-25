@@ -1,8 +1,9 @@
-import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { CircleUser, Menu, Package2 } from "lucide-react";
+"use client";
 
-import { authOptions } from "@/lib/auth";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { CircleUser, Menu, Package2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,11 +19,18 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SignOutButton from "@/components/SignOutButton";
 import Title from "@/components/Title";
 
-async function Header() {
-  const session = await getServerSession(authOptions);
+function Header() {
+  const pathname = usePathname();
+  const { data, status } = useSession();
   const currentYear = new Date().getFullYear().toString();
 
-  if (!session) return null;
+  if (
+    !data?.user ||
+    status !== "authenticated" ||
+    pathname === "/sign-in" ||
+    pathname === "/sign-up"
+  )
+    return null;
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:py-8">
@@ -62,13 +70,17 @@ async function Header() {
       <div className="flex w-full justify-end items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
+            <Button
+              variant="secondary"
+              size="icon"
+              className="rounded-full bg-secondary"
+            >
               <CircleUser className="h-5 w-5" />
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>@{session?.user.username}</DropdownMenuLabel>
+            <DropdownMenuLabel>@{data?.user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="py-0">
               <SignOutButton />

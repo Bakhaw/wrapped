@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -40,6 +41,8 @@ const FormSchema = z
 function SignUpForm() {
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -51,6 +54,8 @@ function SignUpForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
+
     try {
       const response = await fetch("/api/user", {
         method: "POST",
@@ -138,11 +143,9 @@ function SignUpForm() {
         </div>
         <Button
           className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-          disabled={form.formState.isSubmitting}
+          disabled={isLoading}
         >
-          {form.formState.isSubmitting && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
+          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Sign Up
         </Button>
       </form>

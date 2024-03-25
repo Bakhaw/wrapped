@@ -1,26 +1,28 @@
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+export { default } from "next-auth/middleware";
 
-export async function middleware(req: NextRequest) {
-  const { pathname, origin } = req.nextUrl;
-  const c = cookies();
+// import { cookies } from "next/headers";
+// import { NextRequest, NextResponse } from "next/server";
 
-  const devCookieName = "next-auth.session-token";
-  const prodCookieName = "__Secure-next-auth.session-token";
+// export async function middleware(req: NextRequest) {
+//   const { pathname, origin } = req.nextUrl;
+//   const c = cookies();
 
-  const cookieName =
-    process.env.NODE_ENV === "development" ? devCookieName : prodCookieName;
+//   const devCookieName = "next-auth.session-token";
+//   const prodCookieName = "__Secure-next-auth.session-token";
 
-  if (pathname.includes("api/auth")) {
-    return NextResponse.next();
-  }
+//   const cookieName =
+//     process.env.NODE_ENV === "development" ? devCookieName : prodCookieName;
 
-  if (!c.get(cookieName)?.value?.trim() && pathname !== "/sign-in") {
-    return NextResponse.redirect(`${origin}/sign-in`);
-  }
+//   if (pathname.includes("api/auth")) {
+//     return NextResponse.next();
+//   }
 
-  return NextResponse.next();
-}
+//   if (!c.get(cookieName)?.value?.trim() && pathname !== "/sign-in") {
+//     return NextResponse.redirect(`${origin}/sign-in`);
+//   }
+
+//   return NextResponse.next();
+// }
 
 export const config = {
   /*
@@ -30,5 +32,6 @@ export const config = {
    * - _next/image (image optimization files)
    * - favicon.ico (favicon file)
    */
-  matcher: ["/((?!sign-up|api|_next/static|_next/image|favicon.ico).*)"],
+  // matcher: ["/((?!sign-up|api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/"],
 };

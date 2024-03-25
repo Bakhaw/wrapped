@@ -25,6 +25,11 @@ export async function GET() {
           include: {
             albums: true,
           },
+          orderBy: [
+            {
+              year: "desc",
+            },
+          ],
         },
       },
     });
