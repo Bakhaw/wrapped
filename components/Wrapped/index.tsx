@@ -13,6 +13,7 @@ import {
 
 import AddNewWrapButton from "@/components/AddNewWrapButton";
 import AlbumCard from "@/components/AlbumCard";
+import { cn } from "@/lib/utils";
 
 function Wrapped() {
   const {
@@ -27,17 +28,33 @@ function Wrapped() {
   // todo add this in tailwind theme
   const accordionColors = [
     // Other Colors
-    // "#E896FA",
-    // "#FFFF55",
-    // "#83EE92",
-    // "#6793EC",
-    // "#E19A5A",
+    {
+      bg: "#E896FA",
+      text: "white",
+    },
+    {
+      bg: "#FFFF55",
+      text: "black",
+    },
+    {
+      bg: "#83EE92",
+      text: "white",
+    },
+    {
+      bg: "#6793EC",
+      text: "white",
+    },
+    {
+      bg: "#E19A5A",
+      text: "white",
+    },
     // Other Colors
-    "#1C1917",
-    "#262220",
-    "#302A27",
-    "#3B3330",
-    "#493E3A",
+    // "#1C1917",
+    // "#262220",
+    // "#302A27",
+    // "#3B3330",
+    // "#493E3A",
+    // Other Colors
     // "#4D3000",
     // "#3F2700",
     // "#302008",
@@ -69,15 +86,15 @@ function Wrapped() {
             key={item.year}
             value={item.year.toString()}
             style={{
-              backgroundColor: accordionColors[index],
+              backgroundColor: accordionColors[index].bg,
             }}
           >
             <AccordionTrigger className="px-4">
-              <p className="font-black text-accent text-3xl md:text-6xl">
+              <p className="font-black text-accent-foreground text-3xl md:text-6xl">
                 {item.year}
               </p>
             </AccordionTrigger>
-            <AccordionContent className="p-4">
+            <AccordionContent className="px-2 py-4">
               {item.albums.length > 0 ? (
                 <ul className="flex flex-wrap gap-4">
                   {item.albums.map((album, index) => (

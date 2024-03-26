@@ -17,32 +17,32 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   image,
   release_date,
 }) => (
-  <CardContainer className="group rounded-xl h-full w-72 md:w-56 lg:w-80">
-    <CardBody className="p-4 bg-transparent h-full rounded-xl ring-1 ring-white/[0.3] hover:shadow-2xl hover:shadow-white/[0.1]">
+  <CardContainer className="group rounded-xl h-full w-44">
+    <CardBody className="p-4 bg-white/20 h-full rounded-xl ring ring-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50" className="mx-auto">
         <Image
           alt={album}
-          className="h-full w-full object-cover rounded-xl shadow-xl group-hover:ring-1 group-hover:ring-white/[0.3]"
+          className="h-full w-full object-cover rounded-xl shadow-xl ring ring-white/[0.4]"
           src={image}
           height={140}
           width={140}
         />
       </CardItem>
 
-      <Image
+      {/* <Image
         src={image}
         height={200}
         width={200}
-        className="absolute -z-10 inset-0 blur-sm overflow-hidden h-full w-full opacity-40 group-hover:opacity-100 duration-300 object-cover rounded-xl shadow-xl"
+        className="absolute -z-10 inset-0 overflow-hidden h-full w-full zopacity-40 group-hover:zopacity-100 duration-300 object-cover rounded-xl shadow-xl"
         alt={album}
-      />
+      /> */}
 
       <CardItem
         translateZ="50"
-        className="font-bold text-white mt-4 w-fit max-w-64 md:max-w-52 lg:max-w-72"
+        className="font-bold text-white mt-4 w-fit max-w-36"
       >
         <h1 className="bg-black p-2 rounded-sm bg-opacity-30 truncate">
-          {artist} - {album}
+          {album}
         </h1>
       </CardItem>
 
@@ -50,9 +50,10 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         <CardItem
           as="p"
           translateZ="60"
-          className="text-white h-fit text-sm  bg-black p-2 rounded-sm bg-opacity-30"
+          className="text-white h-fit text-sm bg-black p-2 rounded-sm bg-opacity-30"
         >
-          {release_date}
+          {/* {release_date} */}
+          {artist}
         </CardItem>
 
         {actionButton && (

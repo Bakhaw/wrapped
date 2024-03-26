@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 function SignOutButton() {
   return (
     <Button
-      className="p-0"
+      className="p-0 w-full"
       onClick={() => signOut({ callbackUrl: "/sign-in" })}
     >
       Sign out
