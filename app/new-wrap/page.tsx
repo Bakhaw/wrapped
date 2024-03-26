@@ -107,7 +107,9 @@ function Home({
     async function initWrap(year: string) {
       const wrap = await getWrapByYear(year);
 
-      if (!wrap) return;
+      if (!wrap) {
+        return setSelectedAlbums([]);
+      }
 
       const formattedWrap: Album[] = wrap.albums.map((album) => ({
         albumId: album.id,
