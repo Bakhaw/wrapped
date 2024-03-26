@@ -159,7 +159,7 @@ function Home({
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
   return (
-    <section className="flex flex-col gap-8 p-4">
+    <section className="flex flex-col gap-8 px-2 py-4">
       <Title className="text-center md:text-left">new wrap</Title>
 
       <div className="flex flex-col gap-2">
