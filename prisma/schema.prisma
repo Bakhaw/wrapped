@@ -18,6 +18,14 @@ model User {
   wrapped   Wrap[]
 }
 
+model Wrap {
+  id      String  @id @default(cuid())
+  albums  Album[]
+  year    String
+  owner   User?   @relation(fields: [ownerId], references: [id])
+  ownerId String?
+}
+
 model Album {
   id           String  @id @default(cuid())
   album        String
@@ -26,12 +34,4 @@ model Album {
   release_date String
   wrap         Wrap?   @relation(fields: [wrapId], references: [id])
   wrapId       String?
-}
-
-model Wrap {
-  id         String  @id @default(cuid())
-  albums     Album[]
-  year       String
-  owner      User?   @relation(fields: [ownerEmail], references: [email])
-  ownerEmail String?
 }

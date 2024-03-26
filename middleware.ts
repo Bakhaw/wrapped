@@ -33,5 +33,5 @@ export const config = {
    * - favicon.ico (favicon file)
    */
   // matcher: ["/((?!sign-up|api|_next/static|_next/image|favicon.ico).*)"],
-  matcher: ["/"],
+  matcher: ["/", "/new-wrap"],
 };

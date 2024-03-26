@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Album } from "@/types";
 
 import { searchFromApi } from "@/app/api/search/methods";
-// import { getWrap, saveWrap } from "@/app/api/wrapped/methods";
+import { getWrapByYear, saveWrap } from "@/app/api/wrap/methods";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -48,17 +48,6 @@ function Home({
     },
     enabled: typeof search === "string" && search !== "",
   });
-
-  useEffect(() => {
-    if (!year) return;
-
-    async function initWrap(year: string) {
-      // const wrap = await getWrap(year);
-      // console.log("here", wrap);
-    }
-
-    initWrap(year);
-  }, [year]);
 
   function onSelectYearChange(value: string) {
     const params = new URLSearchParams(searchParams);
@@ -103,13 +92,62 @@ function Home({
       release_date: album.year?.toString() ?? year,
     }));
 
-    // await saveWrap({
-    //   albums: formattedAlbums,
-    //   year,
-    // });
+    await saveWrap({
+      albums: formattedAlbums,
+      year,
+    });
 
     setIsSavingWrap(false);
   }
+
+  // TODO re-think ?
+  useEffect(() => {
+    if (!year) return;
+
+    async function initWrap(year: string) {
+      const wrap = await getWrapByYear(year);
+
+      if (!wrap) return;
+
+      const formattedWrap: Album[] = wrap.albums.map((album) => ({
+        albumId: album.id,
+        artist: {
+          artistId: "",
+          name: album.artist,
+        },
+        name: album.album,
+        playlistId: "",
+        year: wrap.year,
+        thumbnails: [
+          {
+            height: 60,
+            width: 60,
+            url: album.image,
+          },
+          {
+            height: 120,
+            width: 120,
+            url: album.image,
+          },
+          {
+            height: 226,
+            width: 226,
+            url: album.image,
+          },
+          {
+            height: 544,
+            width: 544,
+            url: album.image,
+          },
+        ],
+        type: "ALBUM",
+      }));
+
+      setSelectedAlbums(formattedWrap);
+    }
+
+    initWrap(year);
+  }, [year]);
 
   const filterSearchResponseByYear = searchResponse?.filter(
     (item) => item.year?.toString() === year
@@ -191,11 +229,11 @@ function Home({
         </div>
       )}
 
-      {year && searchResponse && searchResponse.length > 0 && (
+      {year && (
         <div className="flex flex-col gap-4">
           <Title className="text-center md:text-left">your {year} wrap</Title>
 
-          {selectedAlbums.length === 0 ? (
+          {selectedAlbums?.length === 0 ? (
             <div className="text-center md:text-left">
               Your favorite <b>{year}</b> albums will be shown here
             </div>

@@ -7,7 +7,7 @@ export type Album = {
     artistId: string | null;
     name: string;
   };
-  year: number | null;
+  year: string | number | null;
   thumbnails: {
     url: string;
     width: number;

@@ -13,7 +13,7 @@ interface UserResponse {
       id: string;
       albums: Album[];
       year: string;
-      ownerEmail: string | null;
+      ownerId: string | null;
     }[];
   };
 }

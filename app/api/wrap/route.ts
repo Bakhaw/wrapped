@@ -4,45 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user.email)
-    return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
-
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        email: session.user.email,
-      },
-      include: {
-        wrapped: {
-          orderBy: [
-            {
-              year: "desc",
-            },
-          ],
-          include: {
-            albums: true,
-          },
-        },
-      },
-    });
-
-    const userWrapped = user?.wrapped ?? [];
-
-    return NextResponse.json({ wrapped: userWrapped }, { status: 200 });
-  } catch (error) {
-    console.log(error);
-
-    return NextResponse.json(
-      { message: "Something went wrong" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user.email)
@@ -51,17 +13,72 @@ export async function POST(req: Request) {
   const { albums, year } = await req.json();
 
   try {
-    const newWrap = await db.wrap.create({
-      data: {
-        albums: {
-          create: albums,
-        },
-        year,
-        ownerEmail: session.user.email,
+    const existingWrap = await db.wrap.findFirst({
+      where: {
+        ownerId: session.user.id,
+        year: year,
+      },
+      include: {
+        albums: true,
       },
     });
 
-    return NextResponse.json({ newWrap }, { status: 200 });
+    if (existingWrap) {
+      const updatedWrap = await db.wrap.update({
+        where: {
+          id: existingWrap.id,
+        },
+        data: {
+          albums: {
+            deleteMany: {},
+            create: albums,
+          },
+        },
+        include: {
+          albums: true,
+        },
+      });
+
+      return NextResponse.json(
+        { updatedWrap: updatedWrap.albums },
+        { status: 200 }
+      );
+    } else {
+      const newWrap = await db.wrap.create({
+        data: {
+          albums: {
+            create: albums,
+          },
+          ownerId: session.user.id,
+          year,
+        },
+        include: {
+          albums: true,
+        },
+      });
+
+      return NextResponse.json({ newWrap }, { status: 200 });
+    }
+
+    // const newWrap = await db.wrap.upsert({
+    //   create: {
+    //     albums: {
+    //       create: albums,
+    //     },
+    //     ownerId: session.user.id,
+    //     year,
+    //   },
+    //   update: {
+    //     albums: {
+    //       create: albums,
+    //     },
+    //     ownerId: session.user.id,
+    //     year,
+    //   },
+    //   where: {
+    //     id: existingWrap?.id ?? "",
+    //   },
+    // });
   } catch (error) {
     console.log(error);
 

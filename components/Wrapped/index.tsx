@@ -61,8 +61,6 @@ function Wrapped() {
       </div>
     );
 
-  console.log("wrapped", wrapped);
-
   return (
     <ul className="flex flex-col justify-center gap-4">
       <Accordion type="multiple">

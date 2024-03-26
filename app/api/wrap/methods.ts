@@ -1,11 +1,24 @@
-import { getServerSession } from "next-auth";
-import { AlbumCardProps } from "@/components/AlbumCard";
-import { db } from "@/lib/db";
+import { Album, Wrap as PrismaWrap } from "@prisma/client";
+
+interface Wrap extends PrismaWrap {
+  albums: Album[];
+}
+
+interface WrapResponse {
+  wrap: Wrap;
+}
+
+export async function getWrapByYear(year: string) {
+  const res = await fetch(`/api/wrap/${year}`);
+  const json = (await res.json()) as WrapResponse;
+
+  return json.wrap;
+}
 
 // TODO fix any type
 export async function saveWrap({ albums, year }: any) {
   const res = await fetch("/api/wrap", {
-    method: "POST",
+    method: "PUT",
     body: JSON.stringify({
       albums,
       year,
@@ -21,6 +34,6 @@ export async function saveWrap({ albums, year }: any) {
 
   if (res.status === 200) {
     // TODO show success alert
-    console.log(`${year} Wrap created with success`, json);
+    console.log(`${year} Wrap saved with success`, json);
   }
 }
