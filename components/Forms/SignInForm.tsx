@@ -55,6 +55,7 @@ function SignInForm() {
     if (signInData?.error) {
       form.setError("email", { message: "Email or password is wrong" });
       form.setError("password", { message: "Email or password is wrong" });
+      setIsLoading(false);
     } else {
       router.refresh();
       router.push("/");
