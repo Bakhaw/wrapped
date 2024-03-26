@@ -30,23 +30,22 @@ function Wrapped() {
     // Other Colors
     {
       bg: "#E896FA",
-      text: "white",
     },
     {
       bg: "#FFFF55",
-      text: "black",
     },
     {
       bg: "#83EE92",
-      text: "white",
+    },
+    {
+      bg: "#DB3325",
+      useWhiteText: true,
     },
     {
       bg: "#6793EC",
-      text: "white",
     },
     {
       bg: "#E19A5A",
-      text: "white",
     },
     // Other Colors
     // "#1C1917",
@@ -90,7 +89,14 @@ function Wrapped() {
             }}
           >
             <AccordionTrigger className="px-4">
-              <p className="font-black text-accent-foreground text-3xl md:text-6xl">
+              <p
+                className={cn(
+                  "font-black text-3xl md:text-6xl",
+                  accordionColors[index]?.useWhiteText
+                    ? "text-accent"
+                    : "text-accent-foreground"
+                )}
+              >
                 {item.year}
               </p>
             </AccordionTrigger>
