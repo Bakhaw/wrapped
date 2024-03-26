@@ -110,6 +110,7 @@ function Wrapped() {
                         artist={album.artist}
                         image={album.image}
                         release_date={album.release_date}
+                        showBlurBackground={false}
                       />
                     </li>
                   ))}
