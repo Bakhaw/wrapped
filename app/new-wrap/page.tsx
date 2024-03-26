@@ -250,18 +250,16 @@ function Home({
         </div>
       )}
 
-      {searchResponse && (
-        <Button
-          className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-          disabled={selectedAlbums.length === 0 || isSavingWrap}
-          onClick={handleSaveButtonClick}
-        >
-          {isSavingWrap && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
-          Save
-        </Button>
-      )}
+      <Button
+        className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+        disabled={selectedAlbums.length === 0 || isSavingWrap}
+        onClick={handleSaveButtonClick}
+      >
+        {isSavingWrap && (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        )}
+        Save
+      </Button>
     </section>
   );
 }
