@@ -8,6 +8,7 @@ export interface AlbumCardProps {
   artist: string;
   image: string;
   release_date: string | number;
+  showBlurBackground: boolean;
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({
@@ -16,8 +17,9 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   artist,
   image,
   release_date,
+  showBlurBackground,
 }) => (
-  <CardContainer className="group rounded-xl h-full w-44">
+  <CardContainer className="group rounded-xl h-full w-56">
     <CardBody className="p-4 bg-white/20 h-full rounded-xl ring ring-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50" className="mx-auto">
         <Image
@@ -29,38 +31,45 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         />
       </CardItem>
 
-      {/* <Image
-        src={image}
-        height={200}
-        width={200}
-        className="absolute -z-10 inset-0 overflow-hidden h-full w-full zopacity-40 group-hover:zopacity-100 duration-300 object-cover rounded-xl shadow-xl"
-        alt={album}
-      /> */}
+      {showBlurBackground && (
+        <Image
+          alt={album}
+          className="absolute -z-10 scale-95 inset-0 blur-md overflow-hidden h-full w-full opacity-40 group-hover:scale-100 group-hover:opacity-100 duration-300 object-cover rounded-xl shadow-xl"
+          height={200}
+          src={image}
+          width={200}
+        />
+      )}
 
-      <CardItem
-        translateZ="50"
-        className="font-bold text-white mt-4 w-fit max-w-36"
-      >
-        <h1 className="bg-black p-2 rounded-sm bg-opacity-30 truncate">
+      <div className="flex flex-col gap-2 mt-4">
+        <CardItem
+          translateZ="50"
+          className="font-bold text-white bg-black bg-opacity-30 max-w-48 p-2 rounded-sm truncate"
+        >
           {album}
-        </h1>
-      </CardItem>
+        </CardItem>
 
-      <div className="w-full flex justify-between mt-2">
         <CardItem
           as="p"
           translateZ="60"
+          className="text-white text-sm bg-black bg-opacity-30 max-w-48 p-2 rounded-sm truncate"
+        >
+          {artist}
+        </CardItem>
+
+        <CardItem
+          as="p"
+          translateZ="70"
           className="text-white h-fit text-sm bg-black p-2 rounded-sm bg-opacity-30"
         >
-          {/* {release_date} */}
-          {artist}
+          {release_date}
         </CardItem>
 
         {actionButton && (
           <CardItem
             as="p"
             translateZ="60"
-            className="flex items-center justify-center text-white text-sm bg-black p-2 rounded-sm bg-opacity-30 opacity-0 group-hover:opacity-100"
+            className="absolute bottom-0 right-0 flex items-center justify-center text-white text-sm bg-black p-2 rounded-md bg-opacity-30 opacity-0 group-hover:opacity-100"
           >
             {actionButton}
           </CardItem>

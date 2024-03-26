@@ -88,8 +88,8 @@ function Home({
       album: album.name,
       artist: album.artist.name,
       id: album.albumId,
-      image: album.thumbnails[3].url,
-      release_date: album.year?.toString() ?? year,
+      image: album.thumbnails[0].url,
+      release_date: album.year,
     }));
 
     await saveWrap({
@@ -119,6 +119,7 @@ function Home({
         },
         name: album.album,
         playlistId: "",
+        release_date: wrap.year,
         year: wrap.year,
         thumbnails: [
           {
@@ -205,6 +206,7 @@ function Home({
               isAlbumAddedToWrap={isAlbumAddedToWrap}
               onAdd={addAlbumToSelection}
               onRemove={removeAlbumFromSelection}
+              showBlurBackground
             />
           )}
         </div>
@@ -226,6 +228,7 @@ function Home({
               isAlbumAddedToWrap={isAlbumAddedToWrap}
               onAdd={addAlbumToSelection}
               onRemove={removeAlbumFromSelection}
+              showBlurBackground
             />
           )}
         </div>

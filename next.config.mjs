@@ -11,6 +11,9 @@ const nextConfig = {
       {
         hostname: "images.unsplash.com",
       },
+      {
+        hostname: "i.scdn.co",
+      },
     ],
   },
 };

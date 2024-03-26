@@ -21,6 +21,7 @@ interface AlbumCardListProps {
   onAdd: (album: Album) => void;
   onRemove: (album: Album) => void;
   albums: Album[];
+  showBlurBackground?: boolean; // default false
 }
 
 function AlbumCardList({
@@ -28,6 +29,7 @@ function AlbumCardList({
   isAlbumAddedToWrap,
   onAdd,
   onRemove,
+  showBlurBackground = false,
 }: AlbumCardListProps) {
   // todo handle drawer showing when an album release isn't the same year as the selected year
   //   function handleDrawerTriggerClick(album: Album) {
@@ -58,9 +60,10 @@ function AlbumCardList({
           <AlbumCard
             album={album.name}
             artist={album.artist.name}
-            image={album.thumbnails[3]?.url}
-            release_date={album.year ?? ""}
+            image={album.thumbnails[0].url}
+            release_date={album.release_date}
             actionButton={<ActionButton album={album} />}
+            showBlurBackground={showBlurBackground}
           />
         </li>
       ))}

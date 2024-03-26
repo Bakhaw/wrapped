@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import YTMusic from "ytmusic-api";
+import SpotifyWebApi from "spotify-web-api-node";
+
+import { Album } from "@/types";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -7,10 +9,37 @@ export async function GET(req: Request) {
 
   if (!query) throw new Error("search: query param not provided");
 
-  const ytmusic = new YTMusic();
-  await ytmusic.initialize();
+  const credentials = {
+    clientId: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  };
 
-  const searchResponse = await ytmusic.searchAlbums(query);
+  const spotifyApi = new SpotifyWebApi(credentials);
+  const clientCredentials = await spotifyApi.clientCredentialsGrant();
+
+  spotifyApi.setAccessToken(clientCredentials.body.access_token);
+
+  const search = await spotifyApi.search(query, ["album"]);
+
+  const searchResponse: Album[] =
+    search.body.albums?.items.map((album) => ({
+      albumId: album.id,
+      artist: {
+        artistId: album.artists[0].id,
+        name: album.artists[0].name,
+      },
+      name: album.name,
+      playlistId: "",
+      thumbnails: [
+        {
+          height: album.images[0].height ?? 100,
+          url: album.images[0].url,
+          width: album.images[0].width ?? 100,
+        },
+      ],
+      release_date: new Date(album.release_date).toLocaleDateString(),
+      year: album.release_date.split("-")[0],
+    })) ?? [];
 
   return NextResponse.json(searchResponse);
 }

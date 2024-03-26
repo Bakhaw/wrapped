@@ -1,13 +1,13 @@
 export type Album = {
-  type: "ALBUM";
   albumId: string;
   playlistId: string;
   name: string;
   artist: {
-    artistId: string | null;
+    artistId: string;
     name: string;
   };
-  year: string | number | null;
+  release_date: string;
+  year: string;
   thumbnails: {
     url: string;
     width: number;
