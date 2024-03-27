@@ -7,7 +7,7 @@ export interface AlbumCardProps {
   album: string;
   artist: string;
   image: string;
-  release_date: string | number;
+  release_date: string;
   showBlurBackground: boolean;
 }
 

@@ -37,8 +37,11 @@ export async function GET(req: Request) {
           width: album.images[0].width ?? 100,
         },
       ],
-      release_date: new Date(album.release_date).toLocaleDateString(),
-      year: album.release_date.split("-")[0],
+      release_date: new Date(album.release_date).toLocaleDateString("en-us", {
+        year: "numeric",
+        month: "long",
+      }),
+      year: new Date(album.release_date).getFullYear().toString(),
     })) ?? [];
 
   return NextResponse.json(searchResponse);

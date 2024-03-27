@@ -90,15 +90,18 @@ function Home({
     const formattedAlbums = selectedAlbums.map((album) => ({
       album: album.name,
       artist: album.artist.name,
-      id: album.albumId,
       image: album.thumbnails[0].url,
-      release_date: album.year,
+      release_date: album.release_date,
     }));
 
-    await saveWrap({
+    const savedWrap = await saveWrap({
       albums: formattedAlbums,
       year,
     });
+
+    if (savedWrap.status === 200) {
+      push("/");
+    }
 
     setIsSavingWrap(false);
   }
@@ -169,7 +172,7 @@ function Home({
   }, [year]);
 
   const filterSearchResponseByYear = searchResponse?.filter(
-    (item) => item.year?.toString() === year
+    (item) => new Date(item.release_date).getFullYear()?.toString() === year
   );
 
   const currentYear = new Date().getFullYear();

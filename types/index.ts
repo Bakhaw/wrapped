@@ -7,7 +7,6 @@ export type Album = {
     name: string;
   };
   release_date: string;
-  year: string;
   thumbnails: {
     url: string;
     width: number;

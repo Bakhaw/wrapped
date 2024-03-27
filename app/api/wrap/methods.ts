@@ -15,13 +15,17 @@ export async function getWrapByYear(year: string) {
   return json.wrap;
 }
 
+interface SaveWrapResponse {
+  wrap: Wrap;
+  status: number;
+}
 export async function saveWrap({
   albums,
   year,
 }: {
-  albums: Omit<Album, "wrapId">[];
+  albums: Omit<Album, "id" | "wrapId">[];
   year: string;
-}) {
+}): Promise<SaveWrapResponse> {
   const res = await fetch("/api/wrap", {
     method: "POST",
     body: JSON.stringify({
@@ -41,6 +45,11 @@ export async function saveWrap({
     // TODO show success alert
     console.log(`${year} Wrap saved with success`, json);
   }
+
+  return {
+    ...json,
+    status: res.status,
+  };
 }
 
 interface DeleteWrapResponse {

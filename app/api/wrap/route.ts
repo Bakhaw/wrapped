@@ -39,10 +39,7 @@ export async function POST(req: Request) {
         },
       });
 
-      return NextResponse.json(
-        { updatedWrap: updatedWrap.albums },
-        { status: 200 }
-      );
+      return NextResponse.json({ updatedWrap }, { status: 200 });
     } else {
       const newWrap = await db.wrap.create({
         data: {
