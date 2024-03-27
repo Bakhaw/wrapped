@@ -62,7 +62,10 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
           translateZ="70"
           className="text-white h-fit text-sm bg-black p-2 rounded-sm bg-opacity-30"
         >
-          {release_date}
+          {new Date(release_date).toLocaleDateString("en-us", {
+            year: "numeric",
+            month: "long",
+          })}
         </CardItem>
 
         {actionButton && (

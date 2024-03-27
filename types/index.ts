@@ -1,6 +1,5 @@
 export type Album = {
   albumId: string;
-  playlistId: string;
   name: string;
   artist: {
     artistId: string;

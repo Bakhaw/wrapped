@@ -137,8 +137,7 @@ function Home({
           name: album.artist,
         },
         name: album.album,
-        playlistId: "",
-        release_date: wrap.year,
+        release_date: album.release_date,
         year: wrap.year,
         thumbnails: [
           {
