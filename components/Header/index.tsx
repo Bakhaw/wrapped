@@ -3,17 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { CircleUser, Menu, Package2 } from "lucide-react";
+import { Menu, Package2 } from "lucide-react";
+
+import { deleteCurrentUser } from "@/app/api/user/methods";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import SignOutButton from "@/components/SignOutButton";
@@ -67,6 +61,13 @@ function Header() {
               Logged as <b>{session.user.username}</b>
             </span>
             <SignOutButton />
+
+            <Button
+              className="p-0 w-full bg-destructive hover:bg-destructive/80 text-accent-foreground"
+              onClick={deleteCurrentUser}
+            >
+              Delete my account
+            </Button>
           </div>
         </SheetContent>
       </Sheet>
@@ -80,24 +81,6 @@ function Header() {
       <div className="ml-auto">
         <AddNewWrapButton />
       </div>
-
-      {/* <div className="flex w-full justify-end items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>@{data?.user.username}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="py-0">
-              <SignOutButton />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div> */}
     </header>
   );
 }
