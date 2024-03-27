@@ -15,7 +15,6 @@ export async function getWrapByYear(year: string) {
   return json.wrap;
 }
 
-// TODO fix any type
 export async function saveWrap({
   albums,
   year,
@@ -24,7 +23,7 @@ export async function saveWrap({
   year: string;
 }) {
   const res = await fetch("/api/wrap", {
-    method: "PUT",
+    method: "POST",
     body: JSON.stringify({
       albums,
       year,

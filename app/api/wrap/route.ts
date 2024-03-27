@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-export async function PUT(req: Request) {
+export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user.email)
@@ -59,26 +59,6 @@ export async function PUT(req: Request) {
 
       return NextResponse.json({ newWrap }, { status: 200 });
     }
-
-    // const newWrap = await db.wrap.upsert({
-    //   create: {
-    //     albums: {
-    //       create: albums,
-    //     },
-    //     ownerId: session.user.id,
-    //     year,
-    //   },
-    //   update: {
-    //     albums: {
-    //       create: albums,
-    //     },
-    //     ownerId: session.user.id,
-    //     year,
-    //   },
-    //   where: {
-    //     id: existingWrap?.id ?? "",
-    //   },
-    // });
   } catch (error) {
     console.log(error);
 

@@ -49,9 +49,20 @@ export async function DELETE(
       where: {
         id: params.year, // slug is called [year] but in reality it corresponds to a wrapId, (yes its bad)
       },
+      include: {
+        albums: true,
+      },
     });
 
-    return NextResponse.json({ wrap }, { status: 200 });
+    const albums = await db.album.deleteMany({
+      where: {
+        id: {
+          in: wrap.albums.map((album) => album.id),
+        },
+      },
+    });
+
+    return NextResponse.json({ albums, wrap }, { status: 200 });
   } catch (error) {
     console.log(error);
 
