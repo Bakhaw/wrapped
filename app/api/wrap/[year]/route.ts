@@ -34,3 +34,30 @@ export async function GET(
     );
   }
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { year: string } }
+) {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user.email)
+    return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
+
+  try {
+    const wrap = await db.wrap.delete({
+      where: {
+        id: params.year, // slug is called [year] but in reality it corresponds to a wrapId, (yes its bad)
+      },
+    });
+
+    return NextResponse.json({ wrap }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}

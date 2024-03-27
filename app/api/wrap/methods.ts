@@ -16,7 +16,13 @@ export async function getWrapByYear(year: string) {
 }
 
 // TODO fix any type
-export async function saveWrap({ albums, year }: any) {
+export async function saveWrap({
+  albums,
+  year,
+}: {
+  albums: Omit<Album, "wrapId">[];
+  year: string;
+}) {
   const res = await fetch("/api/wrap", {
     method: "PUT",
     body: JSON.stringify({
@@ -36,4 +42,18 @@ export async function saveWrap({ albums, year }: any) {
     // TODO show success alert
     console.log(`${year} Wrap saved with success`, json);
   }
+}
+
+interface DeleteWrapResponse {
+  wrap: Wrap;
+  status: number;
+}
+export async function deleteWrap(wrapId: string): Promise<DeleteWrapResponse> {
+  const res = await fetch(`/api/wrap/${wrapId}`, { method: "DELETE" });
+  const json = await res.json();
+
+  return {
+    ...json,
+    status: res.status,
+  };
 }

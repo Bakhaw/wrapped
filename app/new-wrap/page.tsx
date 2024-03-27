@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { Wrap } from "@prisma/client";
 
 import { Album } from "@/types";
 
 import { searchFromApi } from "@/app/api/search/methods";
-import { getWrapByYear, saveWrap } from "@/app/api/wrap/methods";
+import { deleteWrap, getWrapByYear, saveWrap } from "@/app/api/wrap/methods";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -29,9 +30,10 @@ function Home({
   searchParams: { search?: string; year?: string };
 }) {
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const { replace, push } = useRouter();
   const { search, year } = searchParams;
 
+  const [wrap, setWrap] = useState<Wrap>();
   const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
   const [isSavingWrap, setIsSavingWrap] = useState(false);
 
@@ -100,12 +102,23 @@ function Home({
     setIsSavingWrap(false);
   }
 
+  async function handleDeleteButtonClick() {
+    if (!wrap) return;
+
+    const deletedWrap = await deleteWrap(wrap.id);
+
+    if (deletedWrap.status === 200) {
+      push("/");
+    }
+  }
+
   // TODO re-think ?
   useEffect(() => {
     if (!year) return;
 
     async function initWrap(year: string) {
       const wrap = await getWrapByYear(year);
+      setWrap(wrap);
 
       if (!wrap) {
         return setSelectedAlbums([]);
@@ -263,6 +276,18 @@ function Home({
         )}
         Save
       </Button>
+
+      {wrap && (
+        <Button
+          className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
+          onClick={handleDeleteButtonClick}
+        >
+          {isSavingWrap && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Delete this wrap
+        </Button>
+      )}
     </section>
   );
 }
