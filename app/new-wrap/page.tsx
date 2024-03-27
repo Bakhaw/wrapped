@@ -36,6 +36,7 @@ function Home({
   const [wrap, setWrap] = useState<Wrap>();
   const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
   const [isSavingWrap, setIsSavingWrap] = useState(false);
+  const [isDeletingWrap, setIsDeletingWrap] = useState(false);
 
   const {
     isPending,
@@ -104,6 +105,8 @@ function Home({
 
   async function handleDeleteButtonClick() {
     if (!wrap) return;
+
+    setIsDeletingWrap(true);
 
     const deletedWrap = await deleteWrap(wrap.id);
 
@@ -268,7 +271,7 @@ function Home({
 
       <Button
         className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-        disabled={selectedAlbums.length === 0 || isSavingWrap}
+        disabled={selectedAlbums.length === 0 || isSavingWrap || isDeletingWrap}
         onClick={handleSaveButtonClick}
       >
         {isSavingWrap && (
@@ -280,9 +283,10 @@ function Home({
       {wrap && (
         <Button
           className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
+          disabled={isDeletingWrap || isSavingWrap}
           onClick={handleDeleteButtonClick}
         >
-          {isSavingWrap && (
+          {isDeletingWrap && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
           Delete this wrap
