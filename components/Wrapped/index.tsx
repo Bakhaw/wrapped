@@ -4,16 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getUserWrapped } from "@/app/api/user/methods";
 
+import { cn } from "@/lib/utils";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-import AddNewWrapButton from "@/components/AddNewWrapButton";
-import AlbumCard from "@/components/AlbumCard";
-import { cn } from "@/lib/utils";
 
 function Wrapped() {
   const {
@@ -77,6 +75,21 @@ function Wrapped() {
       </div>
     );
 
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   return (
     <ul className="flex flex-col justify-center gap-4">
       <Accordion type="multiple">
@@ -88,37 +101,56 @@ function Wrapped() {
               backgroundColor: accordionColors[index].bg,
             }}
           >
-            <AccordionTrigger className="px-4">
-              <p
-                className={cn(
-                  "font-black text-3xl md:text-6xl",
-                  accordionColors[index]?.useWhiteText
-                    ? "text-accent"
-                    : "text-accent-foreground"
-                )}
-              >
-                {item.year}
-              </p>
-            </AccordionTrigger>
-            <AccordionContent className="px-2 py-4">
-              {item.albums.length > 0 ? (
-                <ul className="flex flex-wrap gap-4">
-                  {item.albums.map((album, index) => (
-                    <li key={index}>
-                      <AlbumCard
-                        album={album.album}
-                        artist={album.artist}
-                        image={album.image}
-                        release_date={album.release_date}
-                        showBlurBackground={false}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <AddNewWrapButton year={item.year.toString()} />
+            <AccordionTrigger
+              className={cn(
+                "font-black px-4 text-3xl",
+                accordionColors[index]?.useWhiteText
+                  ? "text-accent"
+                  : "text-accent-foreground"
               )}
+            >
+              {item.year}
+            </AccordionTrigger>
+            <AccordionContent>
+              <Accordion type="multiple">
+                {months.map((month) => (
+                  <AccordionItem key={month} value={month}>
+                    <AccordionTrigger
+                      className={cn(
+                        "font-black px-4 text-2xl",
+                        accordionColors[index]?.useWhiteText
+                          ? "text-accent"
+                          : "text-accent-foreground"
+                      )}
+                    >
+                      <div>
+                        {month}
+                        <sup className="text-sm ml-1">
+                          ❜{item.year.substring(2, 4)}
+                        </sup>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 text-accent-foreground">
+                      AccordionContent
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </AccordionContent>
+
+            {/* <ul className="flex flex-wrap gap-4">
+                {item.albums.map((album, index) => (
+                  <li key={index}>
+                    <AlbumCard
+                      album={album.album}
+                      artist={album.artist}
+                      image={album.image}
+                      release_date={album.release_date}
+                      showBlurBackground={false}
+                    />
+                  </li>
+                ))}
+              </ul> */}
           </AccordionItem>
         ))}
       </Accordion>
