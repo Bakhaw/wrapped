@@ -28,7 +28,7 @@ function Header() {
     return null;
 
   return (
-    <header className="sticky z-50 top-0 flex h-16 items-center gap-4 border-b bg-background px-2 md:px-0 md:py-8">
+    <header className="flex h-16 items-center gap-4 border-b bg-background px-2 md:px-0 md:py-8">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0">
