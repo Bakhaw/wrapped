@@ -13,6 +13,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import AlbumCard from "@/components/AlbumCard";
+
 function Wrapped() {
   const {
     isPending,
@@ -131,26 +133,32 @@ function Wrapped() {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="px-4 text-accent-foreground">
-                      AccordionContent
+                      <ul className="flex flex-wrap gap-4">
+                        {item.albums.map((album, index) => {
+                          const albumReleaseMonth = new Date(
+                            album.release_date
+                          ).toLocaleDateString("en-us", {
+                            month: "short",
+                          }); // gives "Feb" for 2018-02-22 (YYYY-MM-DD)
+
+                          return albumReleaseMonth === month ? (
+                            <li key={index}>
+                              <AlbumCard
+                                album={album.album}
+                                artist={album.artist}
+                                image={album.image}
+                                release_date={album.release_date}
+                                showBlurBackground={false}
+                              />
+                            </li>
+                          ) : null;
+                        })}
+                      </ul>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
             </AccordionContent>
-
-            {/* <ul className="flex flex-wrap gap-4">
-                {item.albums.map((album, index) => (
-                  <li key={index}>
-                    <AlbumCard
-                      album={album.album}
-                      artist={album.artist}
-                      image={album.image}
-                      release_date={album.release_date}
-                      showBlurBackground={false}
-                    />
-                  </li>
-                ))}
-              </ul> */}
           </AccordionItem>
         ))}
       </Accordion>
