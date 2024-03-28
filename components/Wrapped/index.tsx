@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Album } from "@prisma/client";
 
 import { getUserWrapped } from "@/app/api/user/methods";
 
@@ -24,6 +25,21 @@ function Wrapped() {
     queryKey: ["getUserWrapped"],
     queryFn: async () => await getUserWrapped(),
   });
+
+  function getAlbumsCount(albums: Album[], month: string) {
+    const filterAlbums = albums.filter((album) => {
+      const albumReleaseMonth = new Date(album.release_date).toLocaleDateString(
+        "en-us",
+        {
+          month: "short",
+        }
+      ); // gives "Feb" for 2018-02-22 (YYYY-MM-DD)
+
+      return albumReleaseMonth === month;
+    });
+
+    return filterAlbums.length;
+  }
 
   // todo add this in tailwind theme
   const accordionColors = [
@@ -131,6 +147,11 @@ function Wrapped() {
                           ❜{item.year.substring(2, 4)}
                         </sup>
                       </div>
+                      <span className="ml-auto mr-4 text-base">
+                        {getAlbumsCount(item.albums, month) > 0
+                          ? getAlbumsCount(item.albums, month)
+                          : null}
+                      </span>
                     </AccordionTrigger>
                     <AccordionContent className="px-4 text-accent-foreground">
                       <ul className="flex flex-wrap gap-4">
