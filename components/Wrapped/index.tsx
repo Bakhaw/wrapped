@@ -69,6 +69,9 @@ function Wrapped() {
       bg: "#6793EC",
     },
     {
+      bg: "#EDD470",
+    },
+    {
       bg: "#E19A5A",
     },
     // Other Colors
@@ -124,7 +127,7 @@ function Wrapped() {
             key={item.year}
             value={item.year.toString()}
             style={{
-              backgroundColor: accordionColors[index].bg,
+              backgroundColor: accordionColors[index]?.bg,
             }}
           >
             <AccordionTrigger
