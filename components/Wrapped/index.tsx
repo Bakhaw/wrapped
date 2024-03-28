@@ -26,7 +26,7 @@ function Wrapped() {
     queryFn: async () => await getUserWrapped(),
   });
 
-  function getAlbumsCount(albums: Album[], month: string) {
+  function getAlbumCount(albums: Album[], month: string) {
     const filterAlbums = albums.filter((album) => {
       const albumReleaseMonth = new Date(album.release_date).toLocaleDateString(
         "en-us",
@@ -39,6 +39,14 @@ function Wrapped() {
     });
 
     return filterAlbums.length;
+  }
+
+  function getDateMonthPrefix(date: string) {
+    const prefix = new Date(date).toLocaleDateString("en-us", {
+      month: "short",
+    }); // gives "Feb" for 2018-02-22 (YYYY-MM-DD)
+
+    return prefix;
   }
 
   // todo add this in tailwind theme
@@ -131,53 +139,49 @@ function Wrapped() {
             </AccordionTrigger>
             <AccordionContent>
               <Accordion type="multiple">
-                {months.map((month) => (
-                  <AccordionItem key={month} value={month}>
-                    <AccordionTrigger
-                      className={cn(
-                        "font-black px-4 text-2xl",
-                        accordionColors[index]?.useWhiteText
-                          ? "text-accent"
-                          : "text-accent-foreground"
-                      )}
-                    >
-                      <div>
-                        {month}
-                        <sup className="text-sm ml-1">
-                          ❜{item.year.substring(2, 4)}
-                        </sup>
-                      </div>
-                      <span className="ml-auto mr-4 text-base">
-                        {getAlbumsCount(item.albums, month) > 0
-                          ? getAlbumsCount(item.albums, month)
-                          : null}
-                      </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 text-accent-foreground">
-                      <ul className="flex flex-wrap gap-4">
-                        {item.albums.map((album, index) => {
-                          const albumReleaseMonth = new Date(
-                            album.release_date
-                          ).toLocaleDateString("en-us", {
-                            month: "short",
-                          }); // gives "Feb" for 2018-02-22 (YYYY-MM-DD)
-
-                          return albumReleaseMonth === month ? (
-                            <li key={index}>
-                              <AlbumCard
-                                album={album.album}
-                                artist={album.artist}
-                                image={album.image}
-                                release_date={album.release_date}
-                                showBlurBackground={false}
-                              />
-                            </li>
-                          ) : null;
-                        })}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
+                {months.map((month) => {
+                  const albumCount = getAlbumCount(item.albums, month);
+                  return (
+                    <AccordionItem key={month} value={month}>
+                      <AccordionTrigger
+                        disabled={albumCount === 0}
+                        className={cn(
+                          "font-black px-4 text-2xl disabled:text-muted-foreground",
+                          accordionColors[index]?.useWhiteText
+                            ? "text-accent"
+                            : "text-accent-foreground"
+                        )}
+                      >
+                        <div>
+                          {month}
+                          <sup className="text-sm ml-1">
+                            ❜{item.year.substring(2, 4)}
+                          </sup>
+                        </div>
+                        <span className="ml-auto mr-4 text-base">
+                          {albumCount > 0 ? albumCount : null}
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 text-accent-foreground">
+                        <ul className="flex flex-wrap gap-4">
+                          {item.albums.map((album, index) =>
+                            getDateMonthPrefix(album.release_date) ? (
+                              <li key={index}>
+                                <AlbumCard
+                                  album={album.album}
+                                  artist={album.artist}
+                                  image={album.image}
+                                  release_date={album.release_date}
+                                  showBlurBackground={false}
+                                />
+                              </li>
+                            ) : null
+                          )}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
               </Accordion>
             </AccordionContent>
           </AccordionItem>
