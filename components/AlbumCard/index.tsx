@@ -19,7 +19,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   release_date,
   showBlurBackground,
 }) => (
-  <CardContainer className="group rounded-xl h-full w-56">
+  <CardContainer className="group rounded-xl h-full w-36">
     <CardBody className="p-4 bg-white/20 h-full rounded-xl ring ring-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50" className="mx-auto">
         <Image
@@ -44,7 +44,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
       <div className="flex flex-col gap-2 mt-4">
         <CardItem
           translateZ="50"
-          className="font-bold text-white bg-black bg-opacity-30 max-w-48 p-2 rounded-sm truncate"
+          className="font-bold text-white bg-black bg-opacity-30 max-w-28 p-2 rounded-sm truncate"
         >
           {album}
         </CardItem>
@@ -52,7 +52,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         <CardItem
           as="p"
           translateZ="60"
-          className="text-white text-sm bg-black bg-opacity-30 max-w-48 p-2 rounded-sm truncate"
+          className="text-white text-sm bg-black bg-opacity-30 max-w-28 p-2 rounded-sm truncate"
         >
           {artist}
         </CardItem>
