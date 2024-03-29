@@ -13,6 +13,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "WRAPPPED",
   description: "WRAPPPED",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
