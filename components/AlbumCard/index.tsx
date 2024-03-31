@@ -19,7 +19,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   release_date,
   showBlurBackground,
 }) => (
-  <CardContainer className="group rounded-xl h-full w-40">
+  <CardContainer className="group rounded-xl h-full w-full">
     <CardBody className="p-4 bg-white/20 h-full rounded-xl ring ring-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50" className="mx-auto">
         <Image
@@ -44,7 +44,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
       <div className="flex flex-col gap-2 mt-4">
         <CardItem
           translateZ="50"
-          className="font-bold text-white bg-black bg-opacity-30 max-w-32 p-2 rounded-sm truncate"
+          className="font-bold text-white bg-black bg-opacity-30 px-2 py-1 rounded-sm line-clamp-2"
         >
           {album}
         </CardItem>
@@ -52,7 +52,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         <CardItem
           as="p"
           translateZ="60"
-          className="text-white text-sm bg-black bg-opacity-30 max-w-32 p-2 rounded-sm truncate"
+          className="text-white bg-black bg-opacity-30 px-2 py-1 rounded-sm line-clamp-2"
         >
           {artist}
         </CardItem>
@@ -60,7 +60,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         <CardItem
           as="p"
           translateZ="70"
-          className="text-white h-fit text-sm bg-black p-2 rounded-sm bg-opacity-30"
+          className="text-white h-fit text-sm bg-black px-2 py-1 rounded-sm bg-opacity-30"
         >
           {new Date(release_date).toLocaleDateString("en-us", {
             year: "numeric",

@@ -27,7 +27,7 @@ export default function RootLayout({
         <Providers>
           <div
             className={cn(
-              "min-h-screen max-w-screen-md mx-auto",
+              "min-h-screen max-w-screen-lg mx-auto",
               montserrat.className
             )}
           >

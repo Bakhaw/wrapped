@@ -210,9 +210,7 @@ function Home({
 
       {searchResponse && searchResponse.length > 0 && (
         <div className="flex flex-col gap-4">
-          <Title className="text-center md:text-left">
-            Results for &quot;{search}&quot; in {year}
-          </Title>
+          <Title className="text-center md:text-left">Results in {year}</Title>
 
           {filterSearchResponseByYear?.length === 0 ? (
             <div className="text-center md:text-left">
@@ -232,9 +230,7 @@ function Home({
 
       {searchResponse && (
         <div className="flex flex-col gap-4">
-          <Title className="text-center md:text-left">
-            All results for &quot;{search}&quot;
-          </Title>
+          <Title className="text-center md:text-left">All results</Title>
 
           {searchResponse?.length === 0 ? (
             <div className="text-center md:text-left">
@@ -271,29 +267,33 @@ function Home({
         </div>
       )}
 
-      <Button
-        className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-        disabled={selectedAlbums.length === 0 || isSavingWrap || isDeletingWrap}
-        onClick={handleSaveButtonClick}
-      >
-        {isSavingWrap && (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        )}
-        Save
-      </Button>
-
-      {wrap && (
+      <div className="flex flex-col gap-2">
         <Button
-          className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
-          disabled={isDeletingWrap || isSavingWrap}
-          onClick={handleDeleteButtonClick}
+          className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+          disabled={
+            selectedAlbums.length === 0 || isSavingWrap || isDeletingWrap
+          }
+          onClick={handleSaveButtonClick}
         >
-          {isDeletingWrap && (
+          {isSavingWrap && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Delete this wrap
+          Save
         </Button>
-      )}
+
+        {wrap && (
+          <Button
+            className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
+            disabled={isDeletingWrap || isSavingWrap}
+            onClick={handleDeleteButtonClick}
+          >
+            {isDeletingWrap && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Delete this wrap
+          </Button>
+        )}
+      </div>
     </section>
   );
 }
