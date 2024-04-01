@@ -15,8 +15,10 @@ import { Album } from "@/types";
 // } from "@/components/ui/drawer";
 
 import AlbumCard from "@/components/AlbumCard";
+import { cn } from "@/lib/utils";
 
 interface AlbumCardListProps {
+  className?: string;
   isAlbumAddedToWrap: (album: Album) => boolean;
   onAdd: (album: Album) => void;
   onRemove: (album: Album) => void;
@@ -26,6 +28,7 @@ interface AlbumCardListProps {
 
 function AlbumCardList({
   albums,
+  className,
   isAlbumAddedToWrap,
   onAdd,
   onRemove,
@@ -54,7 +57,7 @@ function AlbumCardList({
     );
 
   return (
-    <ul className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+    <ul className={cn("grid grid-cols-2 sm:grid-cols-5 gap-4", className)}>
       {albums?.map((album) => (
         <li key={album.albumId}>
           <AlbumCard

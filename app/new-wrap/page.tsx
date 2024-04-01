@@ -11,6 +11,16 @@ import { searchFromApi } from "@/app/api/search/methods";
 import { deleteWrap, getWrapByYear, saveWrap } from "@/app/api/wrap/methods";
 
 import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Icons } from "@/components/ui/icons";
 import {
   Select,
@@ -24,7 +34,7 @@ import AlbumCardList from "@/components/AlbumCardList";
 import SearchBar from "@/components/SearchBar";
 import Title from "@/components/Title";
 
-function Home({
+function NewWrapPage({
   searchParams,
 }: {
   searchParams: { search?: string; year?: string };
@@ -248,54 +258,78 @@ function Home({
         </div>
       )}
 
-      {year && (
-        <div className="flex flex-col gap-4">
-          <Title className="text-center md:text-left">your {year} wrap</Title>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button variant="outline">Open Drawer</Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader>
+              <DrawerTitle>
+                <Title className="text-center md:text-left">
+                  your {year} wrap
+                </Title>
+              </DrawerTitle>
+              <DrawerDescription>
+                Set your daily activity goal.
+              </DrawerDescription>
+            </DrawerHeader>
+            <div className="p-4 pb-0">
+              {year && (
+                <div className="flex flex-col gap-4">
+                  {selectedAlbums?.length === 0 ? (
+                    <div className="text-center md:text-left">
+                      Your favorite <b>{year}</b> albums will be shown here
+                    </div>
+                  ) : (
+                    <AlbumCardList
+                      className="sm:grid-cols-2"
+                      albums={selectedAlbums}
+                      isAlbumAddedToWrap={isAlbumAddedToWrap}
+                      onAdd={addAlbumToSelection}
+                      onRemove={removeAlbumFromSelection}
+                    />
+                  )}
+                </div>
+              )}
 
-          {selectedAlbums?.length === 0 ? (
-            <div className="text-center md:text-left">
-              Your favorite <b>{year}</b> albums will be shown here
+              <div className="flex flex-col gap-2">
+                <Button
+                  className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+                  disabled={
+                    selectedAlbums.length === 0 ||
+                    isSavingWrap ||
+                    isDeletingWrap
+                  }
+                  onClick={handleSaveButtonClick}
+                >
+                  {isSavingWrap && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Save
+                </Button>
+              </div>
             </div>
-          ) : (
-            <AlbumCardList
-              albums={selectedAlbums}
-              isAlbumAddedToWrap={isAlbumAddedToWrap}
-              onAdd={addAlbumToSelection}
-              onRemove={removeAlbumFromSelection}
-            />
-          )}
-        </div>
-      )}
-
-      <div className="flex flex-col gap-2">
-        <Button
-          className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-          disabled={
-            selectedAlbums.length === 0 || isSavingWrap || isDeletingWrap
-          }
-          onClick={handleSaveButtonClick}
-        >
-          {isSavingWrap && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
-          Save
-        </Button>
-
-        {wrap && (
-          <Button
-            className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
-            disabled={isDeletingWrap || isSavingWrap}
-            onClick={handleDeleteButtonClick}
-          >
-            {isDeletingWrap && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Delete this wrap
-          </Button>
-        )}
-      </div>
+            <DrawerFooter>
+              <Button
+                className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
+                disabled={isDeletingWrap || isSavingWrap}
+                onClick={handleDeleteButtonClick}
+              >
+                {isDeletingWrap && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Delete this wrap
+              </Button>
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </section>
   );
 }
 
-export default Home;
+export default NewWrapPage;
