@@ -22,13 +22,25 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
   <CardContainer className="group rounded-xl h-full w-full">
     <CardBody className="p-4 bg-white/20 h-full rounded-xl ring ring-white/[0.4] hover:shadow-2xl hover:shadow-white/[0.1]">
       <CardItem translateZ="50" className="mx-auto">
-        <Image
-          alt={album}
-          className="h-full w-full object-cover rounded-xl shadow-xl ring ring-white/[0.4]"
-          src={image}
-          height={140}
-          width={140}
-        />
+        <>
+          <Image
+            alt={album}
+            className="h-full w-full object-cover rounded-xl shadow-xl ring ring-white/[0.4]"
+            src={image}
+            height={140}
+            width={140}
+          />
+
+          {actionButton && (
+            <CardItem
+              as="p"
+              translateZ="60"
+              className="absolute bottom-2 right-2 flex items-center justify-center text-white text-sm bg-black p-2 rounded-md bg-opacity-60 opacity-0 group-hover:opacity-100"
+            >
+              {actionButton}
+            </CardItem>
+          )}
+        </>
       </CardItem>
 
       {showBlurBackground && (
@@ -67,16 +79,6 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
             month: "long",
           })}
         </CardItem>
-
-        {actionButton && (
-          <CardItem
-            as="p"
-            translateZ="60"
-            className="absolute bottom-0 right-0 flex items-center justify-center text-white text-sm bg-black p-2 rounded-md bg-opacity-30 opacity-0 group-hover:opacity-100"
-          >
-            {actionButton}
-          </CardItem>
-        )}
       </div>
     </CardBody>
   </CardContainer>

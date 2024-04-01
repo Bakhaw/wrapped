@@ -43,12 +43,12 @@ function AlbumCardList({
   const ActionButton = ({ album }: { album: Album }) =>
     isAlbumAddedToWrap(album) ? (
       <MinusCircledIcon
-        className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
+        className="cursor-pointer h-6 w-6 text-white hover:scale-[1.15] duration-300"
         onClick={() => onRemove(album)}
       />
     ) : (
       <PlusCircledIcon
-        className="cursor-pointer h-6 w-6 hover:scale-[1.15] duration-300"
+        className="cursor-pointer h-6 w-6 text-white hover:scale-[1.15] duration-300"
         onClick={() => onAdd(album)}
       />
     );

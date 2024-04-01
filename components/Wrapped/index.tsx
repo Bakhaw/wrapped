@@ -166,7 +166,7 @@ function Wrapped() {
                         </span>
                       </AccordionTrigger>
                       <AccordionContent className="px-4 py-2 text-accent-foreground">
-                        <ul className="flex flex-wrap gap-4">
+                        <ul className="grid grid-cols-2 sm:grid-cols-5 gap-4">
                           {item.albums.map((album, index) =>
                             getDateMonthPrefix(album.release_date) === month ? (
                               <li key={index}>
