@@ -57,7 +57,7 @@ function AlbumCardList({
     );
 
   return (
-    <ul className={cn("grid grid-cols-2 sm:grid-cols-5 gap-4", className)}>
+    <ul className={cn("grid grid-cols-2 sm:grid-cols-4 gap-4", className)}>
       {albums?.map((album) => (
         <li key={album.albumId}>
           <AlbumCard

@@ -15,9 +15,10 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -188,7 +189,7 @@ function NewWrapPage({
   const years = Array.from(new Array(50), (val, index) => currentYear - index);
 
   return (
-    <section className="flex flex-col gap-8 px-2 py-4">
+    <section className="flex flex-col gap-8 px-2 pt-4 pb-10">
       <Title className="text-center md:text-left">new wrap</Title>
 
       <div className="flex flex-col gap-2">
@@ -260,73 +261,79 @@ function NewWrapPage({
 
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="outline">Open Drawer</Button>
+          <div className="bg-background">
+            <Button
+              variant="outline"
+              className="uppercase fixed bottom-2 left-2 right-2 max-w-screen-lg mx-auto bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+            >
+              your saved {year} wrap
+            </Button>
+          </div>
         </DrawerTrigger>
-        <DrawerContent>
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader>
-              <DrawerTitle>
-                <Title className="text-center md:text-left">
+        <DrawerPortal>
+          <DrawerOverlay className="fixed inset-0 bg-black/40" />
+          <DrawerContent className="flex flex-col fixed bottom-0 left-0 right-0 max-h-[96%] rounded-t-[10px]">
+            <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 rounded-t-[10px]">
+              <DrawerHeader>
+                <DrawerTitle className="uppercase">
                   your {year} wrap
-                </Title>
-              </DrawerTitle>
-              <DrawerDescription>
-                Set your daily activity goal.
-              </DrawerDescription>
-            </DrawerHeader>
-            <div className="p-4 pb-0">
-              {year && (
-                <div className="flex flex-col gap-4">
-                  {selectedAlbums?.length === 0 ? (
-                    <div className="text-center md:text-left">
-                      Your favorite <b>{year}</b> albums will be shown here
-                    </div>
-                  ) : (
-                    <AlbumCardList
-                      className="sm:grid-cols-2"
-                      albums={selectedAlbums}
-                      isAlbumAddedToWrap={isAlbumAddedToWrap}
-                      onAdd={addAlbumToSelection}
-                      onRemove={removeAlbumFromSelection}
-                    />
-                  )}
-                </div>
-              )}
+                </DrawerTitle>
+              </DrawerHeader>
+              <div className="p-4 pb-0">
+                {year && (
+                  <div className="flex flex-col gap-4">
+                    {selectedAlbums?.length === 0 ? (
+                      <div className="text-center md:text-left">
+                        Your favorite <b>{year}</b> albums will be shown here
+                      </div>
+                    ) : (
+                      <AlbumCardList
+                        className="sm:grid-cols-2"
+                        albums={selectedAlbums}
+                        isAlbumAddedToWrap={isAlbumAddedToWrap}
+                        onAdd={addAlbumToSelection}
+                        onRemove={removeAlbumFromSelection}
+                      />
+                    )}
+                  </div>
+                )}
 
-              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
+                  <Button
+                    className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+                    disabled={
+                      selectedAlbums.length === 0 ||
+                      isSavingWrap ||
+                      isDeletingWrap
+                    }
+                    onClick={handleSaveButtonClick}
+                  >
+                    {isSavingWrap && (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    Save
+                  </Button>
+                </div>
+              </div>
+
+              <DrawerFooter>
                 <Button
-                  className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
-                  disabled={
-                    selectedAlbums.length === 0 ||
-                    isSavingWrap ||
-                    isDeletingWrap
-                  }
-                  onClick={handleSaveButtonClick}
+                  className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
+                  disabled={isDeletingWrap || isSavingWrap}
+                  onClick={handleDeleteButtonClick}
                 >
-                  {isSavingWrap && (
+                  {isDeletingWrap && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Save
+                  Delete this wrap
                 </Button>
-              </div>
+                <DrawerClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DrawerClose>
+              </DrawerFooter>
             </div>
-            <DrawerFooter>
-              <Button
-                className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
-                disabled={isDeletingWrap || isSavingWrap}
-                onClick={handleDeleteButtonClick}
-              >
-                {isDeletingWrap && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Delete this wrap
-              </Button>
-              <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
+          </DrawerContent>
+        </DrawerPortal>
       </Drawer>
     </section>
   );
