@@ -264,7 +264,7 @@ function NewWrapPage({
           <div className="bg-background">
             <Button
               variant="outline"
-              className="uppercase fixed bottom-4 left-2 right-2 max-w-screen-lg mx-auto bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+              className="uppercase fixed bottom-6 rounded-2xl left-2 right-2 max-w-screen-lg mx-auto bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
             >
               your saved {year} wrap
             </Button>
