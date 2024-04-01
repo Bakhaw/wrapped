@@ -271,9 +271,8 @@ function NewWrapPage({
           </div>
         </DrawerTrigger>
         <DrawerPortal>
-          <DrawerOverlay className="fixed inset-0 bg-black/40" />
-          <DrawerContent className="flex flex-col fixed bottom-0 left-0 right-0 max-h-[96%] rounded-t-[10px]">
-            <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 rounded-t-[10px]">
+          <DrawerContent className="flex flex-col fixed bottom-0 left-0 right-0 max-h-full rounded-t-[10px]">
+            <div className="max-w-md w-full mx-auto flex flex-col overflow-auto px-4 mt-4 rounded-t-[10px]">
               <DrawerHeader>
                 <DrawerTitle className="uppercase">
                   your {year} wrap
