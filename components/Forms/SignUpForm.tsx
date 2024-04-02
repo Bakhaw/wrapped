@@ -64,7 +64,7 @@ function SignUpForm() {
         },
         body: JSON.stringify({
           email: values.email,
-          username: values.username,
+          username: values.username.toLowerCase(),
           password: values.password,
         }),
       });
@@ -73,6 +73,7 @@ function SignUpForm() {
 
       if (json.status === 409) {
         form.setError(json.field, { message: json.message });
+        setIsLoading(false);
       }
 
       // todo show an altert to tell the user his account is successfully created

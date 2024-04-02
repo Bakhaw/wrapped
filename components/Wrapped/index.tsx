@@ -1,9 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Album } from "@prisma/client";
-
-import { getUserWrapped } from "@/app/api/user/methods";
 
 import { cn } from "@/lib/utils";
 
@@ -16,16 +13,18 @@ import {
 
 import AlbumCard from "@/components/AlbumCard";
 
-function Wrapped() {
-  const {
-    isPending,
-    error,
-    data: wrapped,
-  } = useQuery({
-    queryKey: ["getUserWrapped"],
-    queryFn: async () => await getUserWrapped(),
-  });
+interface WrappedProps {
+  wrapped:
+    | {
+        id: string;
+        albums: Album[];
+        year: string;
+        ownerId: string | null;
+      }[]
+    | undefined;
+}
 
+function Wrapped({ wrapped }: WrappedProps) {
   function getAlbumCount(albums: Album[], month: string) {
     const filterAlbums = albums.filter((album) => {
       const albumReleaseMonth = new Date(album.release_date).toLocaleDateString(
@@ -88,9 +87,7 @@ function Wrapped() {
     // "#16120C",
   ];
 
-  if (error) return null;
-
-  if (isPending)
+  if (!wrapped)
     return (
       <div className="flex justify-center items-center h-full">
         Wrappping...

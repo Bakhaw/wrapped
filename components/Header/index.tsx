@@ -54,6 +54,9 @@ function Header() {
             >
               NEW WRAP
             </Link>
+            <Link href={`/user`} className="hover:text-foreground">
+              EXPLORE USERS
+            </Link>
           </nav>
 
           <div className="space-y-2">

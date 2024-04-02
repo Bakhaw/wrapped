@@ -264,9 +264,9 @@ function NewWrapPage({
           <div className="bg-background">
             <Button
               variant="outline"
-              className="uppercase fixed bottom-6 rounded-full left-2 right-2 h-12 max-w-screen-lg mx-auto bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+              className="uppercase fixed bottom-6 left-2 right-2 h-12 max-w-screen-lg mx-auto rounded-full text-background font-bold bg-second-gradient/80 hover:bg-second-gradient"
             >
-              your saved {year} wrap
+              your {year} wrap
             </Button>
           </div>
         </DrawerTrigger>

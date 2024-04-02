@@ -1,5 +1,5 @@
-import { signOut } from "next-auth/react";
 import { Album } from "@prisma/client";
+import { signOut } from "next-auth/react";
 
 interface UserResponse {
   user: {
@@ -19,7 +19,7 @@ interface UserResponse {
   };
 }
 
-export async function getUserWrapped() {
+export async function getCurrentUserWrapped() {
   const res = await fetch("/api/user");
   const json = (await res.json()) as UserResponse;
 
@@ -39,4 +39,11 @@ export async function deleteCurrentUser() {
   }
 
   return json;
+}
+
+export async function getUserByUsername(username: string) {
+  const res = await fetch(`/api/user/${username}`);
+  const json = (await res.json()) as UserResponse;
+
+  return json.user;
 }
