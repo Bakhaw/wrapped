@@ -1,35 +1,35 @@
-import { Album, Wrap as PrismaWrap } from "@prisma/client";
+import { Album } from "@prisma/client";
 
-interface Wrap extends PrismaWrap {
-  albums: Album[];
-}
+import { FullWrap } from "@/types";
 
-interface WrapResponse {
-  wrap: Wrap;
-}
-
-export async function getWrapByYear(year: string) {
+export async function getWrapByYear(year: string): Promise<FullWrap> {
   const res = await fetch(`/api/wrap/${year}`);
-  const json = (await res.json()) as WrapResponse;
+  const json = await res.json();
 
   return json.wrap;
 }
 
 interface SaveWrapResponse {
-  wrap: Wrap;
+  wrap: FullWrap;
   status: number;
 }
+
 export async function saveWrap({
   albums,
   year,
 }: {
-  albums: Omit<Album, "id" | "wrapId">[];
+  albums: Album[];
   year: string;
 }): Promise<SaveWrapResponse> {
+  const safeAlbums = albums.map((album) => {
+    const { id, wrapId, ...safeAlbum } = album;
+    return safeAlbum;
+  });
+
   const res = await fetch("/api/wrap", {
     method: "POST",
     body: JSON.stringify({
-      albums,
+      albums: safeAlbums,
       year,
     }),
   });
@@ -53,9 +53,10 @@ export async function saveWrap({
 }
 
 interface DeleteWrapResponse {
-  wrap: Wrap;
+  wrap: FullWrap;
   status: number;
 }
+
 export async function deleteWrap(wrapId: string): Promise<DeleteWrapResponse> {
   const res = await fetch(`/api/wrap/${wrapId}`, { method: "DELETE" });
   const json = await res.json();

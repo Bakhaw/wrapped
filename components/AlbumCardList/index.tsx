@@ -1,28 +1,16 @@
 import { MinusCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
+import { Album } from "@prisma/client";
 
-import { Album } from "@/types";
-
-// import { Button } from "@/components/ui/button";
-// import {
-//   Drawer,
-//   DrawerClose,
-//   DrawerContent,
-//   DrawerDescription,
-//   DrawerFooter,
-//   DrawerHeader,
-//   DrawerTitle,
-//   DrawerTrigger,
-// } from "@/components/ui/drawer";
-
-import AlbumCard from "@/components/AlbumCard";
 import { cn } from "@/lib/utils";
 
+import AlbumCard from "@/components/AlbumCard";
+
 interface AlbumCardListProps {
+  albums: Album[];
   className?: string;
-  isAlbumAddedToWrap: (album: Album) => boolean;
+  isAlbumAddedToWrap: (albumId: Album["id"]) => boolean;
   onAdd: (album: Album) => void;
   onRemove: (album: Album) => void;
-  albums: Album[];
   showBlurBackground?: boolean; // default false
 }
 
@@ -34,17 +22,8 @@ function AlbumCardList({
   onRemove,
   showBlurBackground = false,
 }: AlbumCardListProps) {
-  // todo handle drawer showing when an album release isn't the same year as the selected year
-  //   function handleDrawerTriggerClick(album: Album) {
-  //     if (album.year?.toString() !== year?.toString()) {
-  //       setDrawerOpen;
-  //     } else {
-  //       onAdd(album);
-  //     }
-  //   }
-
   const ActionButton = ({ album }: { album: Album }) =>
-    isAlbumAddedToWrap(album) ? (
+    isAlbumAddedToWrap(album.id) ? (
       <MinusCircledIcon
         className="cursor-pointer h-6 w-6 text-white hover:scale-[1.15] duration-300"
         onClick={() => onRemove(album)}
@@ -59,11 +38,11 @@ function AlbumCardList({
   return (
     <ul className={cn("grid grid-cols-2 sm:grid-cols-4 gap-4", className)}>
       {albums?.map((album) => (
-        <li key={album.albumId}>
+        <li key={album.id}>
           <AlbumCard
-            album={album.name}
-            artist={album.artist.name}
-            image={album.thumbnails[0].url}
+            album={album.album}
+            artist={album.artist}
+            image={album.image}
             release_date={album.release_date}
             actionButton={<ActionButton album={album} />}
             showBlurBackground={showBlurBackground}

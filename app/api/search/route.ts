@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import SpotifyWebApi from "spotify-web-api-node";
-
-import { Album } from "@/types";
+import { Album } from "@prisma/client";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -21,24 +20,13 @@ export async function GET(req: Request) {
 
   const search = await spotifyApi.search(query, ["album"]);
 
-  const searchResponse: Album[] =
+  const searchResponse: Omit<Album, "wrapId">[] =
     search.body.albums?.items.map((album) => ({
-      albumId: album.id,
-      artist: {
-        artistId: album.artists[0].id,
-        name: album.artists[0].name,
-      },
-      name: album.name,
-      playlistId: "",
-      thumbnails: [
-        {
-          height: album.images[0].height ?? 100,
-          url: album.images[0].url,
-          width: album.images[0].width ?? 100,
-        },
-      ],
+      id: album.id,
+      album: album.name,
+      artist: album.artists[0].name,
+      image: album.images[0].url,
       release_date: album.release_date,
-      year: new Date(album.release_date).getFullYear().toString(),
     })) ?? [];
 
   return NextResponse.json(searchResponse);

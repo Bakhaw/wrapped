@@ -1,4 +1,4 @@
-import { Album } from "@/types";
+import { Album } from "@prisma/client";
 
 export async function searchFromApi(query: string) {
   const url = `/api/search?query=${query}`;
