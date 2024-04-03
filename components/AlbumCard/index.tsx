@@ -25,6 +25,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         <>
           <Image
             alt={album}
+            unoptimized
             className="h-full w-full object-cover rounded-xl shadow-xl ring ring-white/[0.4]"
             src={image}
             height={140}
