@@ -9,7 +9,6 @@ import { deleteWrap, saveWrap } from "@/app/api/wrap/methods";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -23,11 +22,19 @@ import AlbumCardList from "@/components/AlbumCardList";
 
 interface DrawerWrapProps {
   albums: Album[];
+  onAdd: (album: Album) => void;
+  onRemove: (album: Album) => void;
   wrapId: string | undefined;
   year: string;
 }
 
-function WrapDrawer({ albums, wrapId, year }: DrawerWrapProps) {
+function WrapDrawer({
+  albums,
+  onAdd,
+  onRemove,
+  wrapId,
+  year,
+}: DrawerWrapProps) {
   const { push } = useRouter();
 
   const [isSavingWrap, setIsSavingWrap] = useState(false);
@@ -66,7 +73,6 @@ function WrapDrawer({ albums, wrapId, year }: DrawerWrapProps) {
     }
   }
 
-  // TODO ligne 102-103
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -83,29 +89,24 @@ function WrapDrawer({ albums, wrapId, year }: DrawerWrapProps) {
         <DrawerContent className="flex flex-col fixed bottom-0 left-0 right-0 max-h-full rounded-t-[10px]">
           <div className="max-w-md w-full mx-auto flex flex-col overflow-auto px-4 mt-4 rounded-t-[10px]">
             <DrawerHeader>
-              <DrawerTitle className="uppercase">your {year} wrap</DrawerTitle>
+              <DrawerTitle className="uppercase text-center">
+                your {year} wrap
+              </DrawerTitle>
             </DrawerHeader>
-            <div className="p-4 pb-0">
-              {year && (
-                <div className="flex flex-col gap-4">
-                  {albums?.length === 0 ? (
-                    <div className="text-center md:text-left">
-                      Your favorite <b>{year}</b> albums will be shown here
-                    </div>
-                  ) : (
-                    <AlbumCardList
-                      className="sm:grid-cols-2"
-                      albums={albums}
-                      isAlbumAddedToWrap={isAlbumAddedToWrap}
-                      onAdd={() => {}}
-                      onRemove={() => {}}
-                      //   onAdd={addAlbumToSelection}
-                      //   onRemove={removeAlbumFromSelection}
-                    />
-                  )}
-                </div>
-              )}
 
+            <div className="p-4">
+              {year && (
+                <AlbumCardList
+                  className="sm:grid-cols-2"
+                  albums={albums}
+                  isAlbumAddedToWrap={isAlbumAddedToWrap}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                />
+              )}
+            </div>
+
+            <DrawerFooter>
               <div className="flex flex-col gap-2">
                 <Button
                   className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
@@ -120,9 +121,6 @@ function WrapDrawer({ albums, wrapId, year }: DrawerWrapProps) {
                   Save
                 </Button>
               </div>
-            </div>
-
-            <DrawerFooter>
               <Button
                 className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
                 disabled={isDeletingWrap || isSavingWrap}
@@ -133,9 +131,6 @@ function WrapDrawer({ albums, wrapId, year }: DrawerWrapProps) {
                 )}
                 Delete this wrap
               </Button>
-              <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose>
             </DrawerFooter>
           </div>
         </DrawerContent>

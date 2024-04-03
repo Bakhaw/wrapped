@@ -82,10 +82,11 @@ function NewWrapPage({
     async function refreshWrap(year: string) {
       const wrap = await getWrapByYear(year);
       setWrap(wrap);
+
+      setSelectedAlbums(wrap?.albums ?? []);
     }
 
     refreshWrap(year);
-    setSelectedAlbums([]);
   }, [year]);
 
   const filterSearchResponseByYear = useMemo(
@@ -170,9 +171,11 @@ function NewWrapPage({
         </div>
       )}
 
-      {year && (
+      {year && selectedAlbums.length > 0 && (
         <WrapDrawer
-          albums={wrap ? [...wrap.albums, ...selectedAlbums] : selectedAlbums}
+          albums={selectedAlbums}
+          onAdd={addAlbumToSelection}
+          onRemove={removeAlbumFromSelection}
           wrapId={wrap?.id}
           year={year}
         />

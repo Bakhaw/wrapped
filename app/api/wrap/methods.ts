@@ -2,7 +2,9 @@ import { Album } from "@prisma/client";
 
 import { FullWrap } from "@/types";
 
-export async function getWrapByYear(year: string): Promise<FullWrap> {
+export async function getWrapByYear(
+  year: string
+): Promise<FullWrap | undefined> {
   const res = await fetch(`/api/wrap/${year}`);
   const json = await res.json();
 
