@@ -76,14 +76,9 @@ function WrapDrawer({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <div className="bg-background">
-          <Button
-            variant="outline"
-            className="uppercase fixed bottom-6 left-2 right-2 h-12 max-w-screen-lg mx-auto rounded-full text-background font-bold bg-second-gradient/80 hover:bg-second-gradient"
-          >
-            your {year} wrap
-          </Button>
-        </div>
+        <Button className="uppercase h-12 rounded-full font-bold text-background hover:scale-110 transition-all duration-300">
+          your {year} wrap
+        </Button>
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerContent className="flex flex-col fixed bottom-0 left-0 right-0 max-h-full rounded-t-[10px]">
@@ -109,7 +104,7 @@ function WrapDrawer({
             <DrawerFooter>
               <div className="flex flex-col gap-2">
                 <Button
-                  className="w-full mt-6 bg-second-gradient/80 hover:bg-second-gradient text-background font-bold"
+                  className="mt-6 font-bold text-background"
                   disabled={
                     albums.length === 0 || isSavingWrap || isDeletingWrap
                   }
@@ -118,13 +113,14 @@ function WrapDrawer({
                   {isSavingWrap && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Save
+                  {wrapId ? "Update" : "Create wrap"}
                 </Button>
               </div>
               <Button
-                className="w-full bg-destructive/80 hover:bg-destructive text-background font-bold"
-                disabled={isDeletingWrap || isSavingWrap}
+                className="font-bold"
+                disabled={!wrapId || isDeletingWrap || isSavingWrap}
                 onClick={handleDeleteButtonClick}
+                variant="destructive"
               >
                 {isDeletingWrap && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

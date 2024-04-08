@@ -24,6 +24,9 @@ import Title from "@/components/Title";
 
 import WrapDrawer from "./wrap-drawer";
 
+import SearchSvg from "@/images/search.svg";
+import Image from "next/image";
+
 function NewWrapPage({
   searchParams,
 }: {
@@ -104,8 +107,8 @@ function NewWrapPage({
     <section className="flex flex-col gap-8 px-2 pt-4 pb-14">
       <Title className="text-center md:text-left">new wrap</Title>
 
-      <div className="flex flex-col gap-2">
-        <label>Select a year</label>
+      <div className="flex flex-col gap-2 w-full">
+        <label className="text-primary font-bold">Select a year</label>
         <Select onValueChange={onSelectYearChange} defaultValue={year}>
           <SelectTrigger>
             <SelectValue />
@@ -120,23 +123,36 @@ function NewWrapPage({
         </Select>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label>Search your favorite albums</label>
-        <SearchBar placeholder="Drake - More Life" />
+      <div className="flex flex-col gap-2 w-full">
+        <label className="text-primary font-bold">
+          Search your favorite albums
+        </label>
+        <SearchBar placeholder="Ipséité" />
       </div>
 
       {search && isPending && (
-        <div className="flex justify-center items-center h-full">
-          Wrappping...
+        <div className="flex flex-col justify-center items-center gap-4 h-full animate-pulse">
+          <span className="block text-primary font-bold uppercase">
+            Wrappping ...
+          </span>
+          <Image
+            alt="search empty"
+            priority
+            src={SearchSvg}
+            height={180}
+            width={180}
+          />
         </div>
       )}
 
       {searchResponse && searchResponse.length > 0 && (
         <div className="flex flex-col gap-4">
-          <Title className="text-center md:text-left">Results in {year}</Title>
+          <Title className="text-primary text-center md:text-left">
+            Results in {year}
+          </Title>
 
           {filterSearchResponseByYear?.length === 0 ? (
-            <div className="text-center md:text-left">
+            <div className="text-primary text-center md:text-left">
               No results found for <b>{search}</b> in <b>{year}</b>
             </div>
           ) : (
@@ -156,7 +172,7 @@ function NewWrapPage({
           <Title className="text-center md:text-left">All results</Title>
 
           {searchResponse?.length === 0 ? (
-            <div className="text-center md:text-left">
+            <div className="text-primary text-center md:text-left">
               No results found for <b>{search}</b>
             </div>
           ) : (
@@ -172,13 +188,15 @@ function NewWrapPage({
       )}
 
       {year && selectedAlbums.length > 0 && (
-        <WrapDrawer
-          albums={selectedAlbums}
-          onAdd={addAlbumToSelection}
-          onRemove={removeAlbumFromSelection}
-          wrapId={wrap?.id}
-          year={year}
-        />
+        <div className="fixed bottom-6 self-center">
+          <WrapDrawer
+            albums={selectedAlbums}
+            onAdd={addAlbumToSelection}
+            onRemove={removeAlbumFromSelection}
+            wrapId={wrap?.id}
+            year={year}
+          />
+        </div>
       )}
     </section>
   );

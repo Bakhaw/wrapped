@@ -89,14 +89,14 @@ function Wrapped({ wrapped }: WrappedProps) {
 
   if (!wrapped)
     return (
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center h-full p-4 text-primary font-bold">
         Wrappping...
       </div>
     );
 
   if (wrapped.length === 0)
     return (
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center h-full p-4 text-primary font-bold">
         No wraps found
       </div>
     );
