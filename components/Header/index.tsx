@@ -8,7 +8,12 @@ import { Menu, Package2 } from "lucide-react";
 import { deleteCurrentUser } from "@/app/api/user/methods";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import AddNewWrapButton from "@/components/AddNewWrapButton";
 import Title from "@/components/Title";
@@ -49,9 +54,15 @@ function Header() {
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Wrappped</span>
             </Link>
-            <Link href="/">WRAPPPED</Link>
-            <Link href={`/new-wrap?year=${currentYear}`}>NEW WRAP</Link>
-            <Link href={`/user`}>EXPLORE USERS</Link>
+            <SheetClose asChild>
+              <Link href="/">WRAPPPED</Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={`/new-wrap?year=${currentYear}`}>NEW WRAP</Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={`/user`}>EXPLORE USERS</Link>
+            </SheetClose>
           </nav>
 
           <div className="space-y-2">
