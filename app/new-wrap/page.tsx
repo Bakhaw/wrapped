@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Album } from "@prisma/client";
@@ -25,7 +26,6 @@ import Title from "@/components/Title";
 import WrapDrawer from "./wrap-drawer";
 
 import SearchSvg from "@/images/search.svg";
-import Image from "next/image";
 
 function NewWrapPage({
   searchParams,
@@ -108,7 +108,8 @@ function NewWrapPage({
       <Title className="text-center md:text-left">new wrap</Title>
 
       <div className="flex flex-col gap-2 w-full">
-        <label className="text-primary font-bold">Select a year</label>
+        <label className="text-primary font-semibold pl-1">Select a year</label>
+
         <Select onValueChange={onSelectYearChange} defaultValue={year}>
           <SelectTrigger>
             <SelectValue />
@@ -124,7 +125,7 @@ function NewWrapPage({
       </div>
 
       <div className="flex flex-col gap-2 w-full">
-        <label className="text-primary font-bold">
+        <label className="text-primary font-semibold pl-1">
           Search your favorite albums
         </label>
         <SearchBar placeholder="Ipséité" />
@@ -135,6 +136,7 @@ function NewWrapPage({
           <span className="block text-primary font-bold uppercase">
             Wrappping ...
           </span>
+
           <Image
             alt="search empty"
             priority

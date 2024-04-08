@@ -23,9 +23,8 @@ function AuthButtons() {
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <Button
-        className="w-full"
         disabled={isSigningOut || isDeletingAccount}
         onClick={handleSignOutButtonClick}
         variant="outline"
@@ -36,7 +35,6 @@ function AuthButtons() {
         Sign out
       </Button>
       <Button
-        className="w-full"
         disabled={isSigningOut || isDeletingAccount}
         onClick={handleDeleteAccountButtonClick}
         variant="destructive"
@@ -46,7 +44,7 @@ function AuthButtons() {
         )}
         Delete my account
       </Button>
-    </>
+    </div>
   );
 }
 

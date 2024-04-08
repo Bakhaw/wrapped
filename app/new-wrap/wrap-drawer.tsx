@@ -9,6 +9,7 @@ import { deleteWrap, saveWrap } from "@/app/api/wrap/methods";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -76,9 +77,7 @@ function WrapDrawer({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button className="uppercase h-12 rounded-full font-bold text-background hover:scale-110 transition-all duration-300">
-          your {year} wrap
-        </Button>
+        <Button className="uppercase h-12">your {year} wrap</Button>
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerContent className="flex flex-col fixed bottom-0 left-0 right-0 max-h-full rounded-t-[10px]">
@@ -102,22 +101,18 @@ function WrapDrawer({
             </div>
 
             <DrawerFooter>
-              <div className="flex flex-col gap-2">
-                <Button
-                  className="mt-6 font-bold text-background"
-                  disabled={
-                    albums.length === 0 || isSavingWrap || isDeletingWrap
-                  }
-                  onClick={handleSaveButtonClick}
-                >
-                  {isSavingWrap && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  {wrapId ? "Update" : "Create wrap"}
-                </Button>
-              </div>
               <Button
-                className="font-bold"
+                className="w-40"
+                disabled={albums.length === 0 || isSavingWrap || isDeletingWrap}
+                onClick={handleSaveButtonClick}
+              >
+                {isSavingWrap && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                {wrapId ? "Update" : "Create wrap"}
+              </Button>
+              <Button
+                className="w-40"
                 disabled={!wrapId || isDeletingWrap || isSavingWrap}
                 onClick={handleDeleteButtonClick}
                 variant="destructive"
@@ -125,8 +120,18 @@ function WrapDrawer({
                 {isDeletingWrap && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Delete this wrap
+                Delete
               </Button>
+
+              <DrawerClose asChild>
+                <Button
+                  className="w-40"
+                  variant="outline"
+                  disabled={isSavingWrap || isDeletingWrap}
+                >
+                  Cancel
+                </Button>
+              </DrawerClose>
             </DrawerFooter>
           </div>
         </DrawerContent>

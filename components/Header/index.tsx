@@ -38,20 +38,19 @@ function Header() {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0">
-            <Menu className="h-5 w-5 text-primary" />
+            <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="flex flex-col justify-between text-primary "
+          className="flex flex-col justify-between text-primary"
         >
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-2 text-lg font-semibold"
             >
-              <Package2 className="h-6 w-6" />
               <span className="sr-only">Wrappped</span>
             </Link>
             <SheetClose asChild>
@@ -61,14 +60,15 @@ function Header() {
               <Link href={`/new-wrap?year=${currentYear}`}>NEW WRAP</Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href={`/user`}>EXPLORE USERS</Link>
+              <Link href="/user">EXPLORE WRAPPPERS</Link>
             </SheetClose>
           </nav>
 
           <div className="space-y-2">
-            <span className="font-thin">
+            <span className="block font-thin">
               Logged as{" "}
-              <span className="font-bold">{session.user.username}</span>
+              <span className="font-bold">{session.user.username}</span>{" "}
+              <span className="text-sm">({session.user.email})</span>
             </span>
 
             <AuthButtons />

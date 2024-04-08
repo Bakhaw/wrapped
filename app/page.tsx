@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getCurrentUserWrapped } from "@/app/api/user/methods";
+import { getCurrentUserWrapped } from "@/app/api/me/methods";
 
 import Wrapped from "@/components/Wrapped";
 

@@ -19,16 +19,16 @@ interface UserResponse {
   };
 }
 
-export async function getCurrentUserWrapped() {
-  const res = await fetch("/api/user");
-  const json = (await res.json()) as UserResponse;
+// export async function getCurrentUserWrapped() {
+//   const res = await fetch("/api/user");
+//   const json = (await res.json()) as UserResponse;
 
-  if (res.status === 404) {
-    signOut({ callbackUrl: "/sign-in" });
-  }
+//   if (res.status === 404) {
+//     signOut({ callbackUrl: "/sign-in" });
+//   }
 
-  return json.user.wrapped;
-}
+//   return json.user.wrapped;
+// }
 
 export async function deleteCurrentUser() {
   const res = await fetch("/api/user", { method: "DELETE" });
