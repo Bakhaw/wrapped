@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Menu, Package2 } from "lucide-react";
-
-import { deleteCurrentUser } from "@/app/api/user/methods";
+import { EditIcon, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +35,11 @@ function Header() {
     <header className="flex h-16 items-center gap-4 bg-background px-2 md:px-0 md:py-8">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0">
+          <Button
+            variant="outline"
+            size="icon"
+            className="shrink-0 border-none"
+          >
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
@@ -82,7 +84,7 @@ function Header() {
         </Link>
       </nav>
 
-      <div className="ml-auto">
+      <div className="flex gap-2 ml-auto">
         <AddNewWrapButton />
       </div>
     </header>

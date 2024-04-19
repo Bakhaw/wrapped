@@ -11,7 +11,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { Button } from "@/components/ui/button";
+
 import AlbumCard from "@/components/AlbumCard";
+import Link from "next/link";
 
 interface WrappedProps {
   wrapped:
@@ -25,7 +28,7 @@ interface WrappedProps {
 }
 
 function Wrapped({ wrapped }: WrappedProps) {
-  function getAlbumCount(albums: Album[], month: string) {
+  function getAlbumCountByMonth(albums: Album[], month: string) {
     const filterAlbums = albums.filter((album) => {
       const albumReleaseMonth = new Date(album.release_date).toLocaleDateString(
         "en-us",
@@ -136,11 +139,18 @@ function Wrapped({ wrapped }: WrappedProps) {
               )}
             >
               {item.year}
+
+              <Link
+                href={`/edit-wrap?year=${item.year}`}
+                className="ml-auto mr-4"
+              >
+                <Button>Edit</Button>
+              </Link>
             </AccordionTrigger>
             <AccordionContent>
               <Accordion type="multiple">
                 {months.map((month) => {
-                  const albumCount = getAlbumCount(item.albums, month);
+                  const albumCount = getAlbumCountByMonth(item.albums, month);
                   return (
                     <AccordionItem key={month} value={month}>
                       <AccordionTrigger

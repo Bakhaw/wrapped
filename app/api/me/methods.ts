@@ -12,3 +12,14 @@ export async function getCurrentUserWrapped() {
 
   return json.wrapped;
 }
+
+export async function deleteCurrentUserAccount() {
+  const res = await fetch("/api/user", { method: "DELETE" });
+  const json = await res.json();
+
+  if (res.status === 200) {
+    signOut({ callbackUrl: "/sign-in" });
+  }
+
+  return json;
+}
