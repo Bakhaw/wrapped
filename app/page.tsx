@@ -14,7 +14,7 @@ function Home() {
 
   return (
     <section className="flex flex-col h-full">
-      <Wrapped wrapped={wrapped} />
+      <Wrapped showEditButton wrapped={wrapped} />
     </section>
   );
 }

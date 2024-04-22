@@ -4,6 +4,18 @@ import * as z from "zod";
 
 import { db } from "@/lib/db";
 
+export async function GET(req: Request) {
+  const users = await db.user.findMany({
+    orderBy: {
+      username: "asc",
+    },
+  });
+
+  return NextResponse.json({
+    users,
+  });
+}
+
 export async function POST(req: Request) {
   const userSchema = z.object({
     username: z.string().min(1, "Username is required").max(100),

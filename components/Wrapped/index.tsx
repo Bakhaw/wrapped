@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Album } from "@prisma/client";
+import { Edit3Icon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -12,12 +13,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { buttonVariants } from "@/components/ui/button";
-
 import AlbumCard from "@/components/AlbumCard";
-import { Edit2Icon, Edit3, Edit3Icon, EditIcon } from "lucide-react";
 
 interface WrappedProps {
+  showEditButton: boolean;
   wrapped:
     | {
         id: string;
@@ -28,7 +27,7 @@ interface WrappedProps {
     | undefined;
 }
 
-function Wrapped({ wrapped }: WrappedProps) {
+function Wrapped({ showEditButton, wrapped }: WrappedProps) {
   function getAlbumCountByMonth(albums: Album[], month: string) {
     const filterAlbums = albums.filter((album) => {
       const albumReleaseMonth = new Date(album.release_date).toLocaleDateString(
@@ -54,7 +53,6 @@ function Wrapped({ wrapped }: WrappedProps) {
 
   // todo add this in tailwind theme
   const accordionColors = [
-    // Other Colors
     {
       bg: "#E896FA",
     },
@@ -77,18 +75,6 @@ function Wrapped({ wrapped }: WrappedProps) {
     {
       bg: "#E19A5A",
     },
-    // Other Colors
-    // "#1C1917",
-    // "#262220",
-    // "#302A27",
-    // "#3B3330",
-    // "#493E3A",
-    // Other Colors
-    // "#4D3000",
-    // "#3F2700",
-    // "#302008",
-    // "#1D180F",
-    // "#16120C",
   ];
 
   if (!wrapped)
@@ -141,12 +127,14 @@ function Wrapped({ wrapped }: WrappedProps) {
             >
               {item.year}
 
-              <Link
-                href={`/new-wrap?year=${item.year}`}
-                className="ml-auto mr-4"
-              >
-                <Edit3Icon className="h-5 w-5 shrink-0 text-accent-foreground" />
-              </Link>
+              {showEditButton && (
+                <Link
+                  href={`/new-wrap?year=${item.year}`}
+                  className="ml-auto mr-4"
+                >
+                  <Edit3Icon className="h-5 w-5 shrink-0 text-accent-foreground" />
+                </Link>
+              )}
             </AccordionTrigger>
             <AccordionContent>
               <Accordion type="multiple">

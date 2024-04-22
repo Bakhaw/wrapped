@@ -62,7 +62,7 @@ function Header() {
               <Link href={`/new-wrap?year=${currentYear}`}>NEW WRAP</Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href="/user">EXPLORE WRAPPPERS</Link>
+              <Link href="/wrapppers">EXPLORE WRAPPPERS</Link>
             </SheetClose>
           </nav>
 

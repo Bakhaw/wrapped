@@ -1,3 +1,4 @@
+import { FullUser } from "@/types";
 import { Album } from "@prisma/client";
 
 interface UserResponse {
@@ -23,4 +24,11 @@ export async function getUserByUsername(username: string) {
   const json = (await res.json()) as UserResponse;
 
   return json.user;
+}
+
+export async function getAllUsers() {
+  const res = await fetch("/api/user");
+  const json = await res.json();
+
+  return json.users as FullUser[];
 }
