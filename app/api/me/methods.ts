@@ -2,7 +2,7 @@ import { signOut } from "next-auth/react";
 
 import { FullUser } from "@/types";
 
-export async function getCurrentUserWrapped() {
+export async function getWrapped() {
   const res = await fetch("/api/me");
   const json = (await res.json()) as FullUser;
 
@@ -13,8 +13,8 @@ export async function getCurrentUserWrapped() {
   return json.wrapped;
 }
 
-export async function deleteCurrentUserAccount() {
-  const res = await fetch("/api/user", { method: "DELETE" });
+export async function deleteAccount() {
+  const res = await fetch("/api/me", { method: "DELETE" });
   const json = await res.json();
 
   if (res.status === 200) {

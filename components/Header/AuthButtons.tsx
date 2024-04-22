@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 
-import { deleteCurrentUserAccount } from "@/app/api/me/methods";
+import { deleteAccount } from "@/app/api/me/methods";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -19,7 +19,7 @@ function AuthButtons() {
 
   function handleDeleteAccountButtonClick() {
     setIsDeletingAccount(true);
-    deleteCurrentUserAccount();
+    deleteAccount();
   }
 
   return (

@@ -105,7 +105,9 @@ function NewWrapPage({
 
   return (
     <section className="flex flex-col gap-8 px-2 pt-4 pb-14">
-      <Title className="text-center md:text-left">new wrap</Title>
+      <Title className="text-center md:text-left">
+        {wrap ? "edit" : "new"} wrap
+      </Title>
 
       <div className="flex flex-col gap-2 w-full">
         <label className="text-primary font-semibold pl-1">Select a year</label>

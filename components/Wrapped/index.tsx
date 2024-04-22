@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Album } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
@@ -11,10 +12,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import AlbumCard from "@/components/AlbumCard";
-import Link from "next/link";
+import { Edit2Icon, Edit3, Edit3Icon, EditIcon } from "lucide-react";
 
 interface WrappedProps {
   wrapped:
@@ -141,10 +142,10 @@ function Wrapped({ wrapped }: WrappedProps) {
               {item.year}
 
               <Link
-                href={`/edit-wrap?year=${item.year}`}
+                href={`/new-wrap?year=${item.year}`}
                 className="ml-auto mr-4"
               >
-                <Button>Edit</Button>
+                <Edit3Icon className="h-5 w-5 shrink-0 text-accent-foreground" />
               </Link>
             </AccordionTrigger>
             <AccordionContent>

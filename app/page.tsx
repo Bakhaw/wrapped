@@ -2,14 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getCurrentUserWrapped } from "@/app/api/me/methods";
+import { getWrapped } from "@/app/api/me/methods";
 
 import Wrapped from "@/components/Wrapped";
 
 function Home() {
   const { data: wrapped } = useQuery({
-    queryKey: ["getCurrentUserWrapped"],
-    queryFn: getCurrentUserWrapped,
+    queryKey: ["getWrapped"],
+    queryFn: getWrapped,
   });
 
   return (
