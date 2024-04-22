@@ -19,7 +19,7 @@ function WrapppersPage() {
     <section className="flex flex-col gap-8 px-2 py-4">
       <Title>Explore wrapppers</Title>
 
-      <ul className="flex gap-6">
+      <ul className="flex flex-wrap gap-6">
         {users?.map((user) => (
           <Link
             href={`/wrapppers/${user.username}`}
