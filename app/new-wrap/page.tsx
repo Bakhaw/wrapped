@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Album } from "@prisma/client";
-
-import { FullWrap } from "@/types";
 
 import { searchFromApi } from "@/app/api/search/methods";
 import { getWrapByYear } from "@/app/api/wrap/methods";
@@ -36,8 +34,19 @@ function NewWrapPage({
   const { replace } = useRouter();
   const { search, year } = searchParams;
 
-  const [wrap, setWrap] = useState<FullWrap>();
   const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
+
+  const { isPending: isWrapPending, data: wrap } = useQuery({
+    queryKey: ["getWrap", year],
+    queryFn: async () => {
+      if (!year) return;
+
+      const wrap = await getWrapByYear(year);
+      setSelectedAlbums(wrap?.albums ?? []);
+      return wrap;
+    },
+    enabled: typeof year === "string" && year !== "",
+  });
 
   const { isPending, data: searchResponse } = useQuery({
     queryKey: ["search", search],
@@ -78,19 +87,6 @@ function NewWrapPage({
     );
     setSelectedAlbums(newAlbums);
   }
-
-  useEffect(() => {
-    if (!year) return;
-
-    async function refreshWrap(year: string) {
-      const wrap = await getWrapByYear(year);
-      setWrap(wrap);
-
-      setSelectedAlbums(wrap?.albums ?? []);
-    }
-
-    refreshWrap(year);
-  }, [year]);
 
   const filterSearchResponseByYear = useMemo(
     () =>

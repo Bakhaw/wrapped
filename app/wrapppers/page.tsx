@@ -13,8 +13,6 @@ function WrapppersPage() {
     queryFn: getAllUsers,
   });
 
-  console.log("data", users);
-
   return (
     <section className="flex flex-col gap-8 px-2 py-4">
       <Title>Explore wrapppers</Title>
